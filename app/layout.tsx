@@ -19,7 +19,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`${spaceGrotesk.className} bg-black text-white antialiased`}>
+      <body className={`${spaceGrotesk.className} bg-white text-gray-900 antialiased`} suppressHydrationWarning>
         <CartProvider>
           {children}
           <CartDrawer />
