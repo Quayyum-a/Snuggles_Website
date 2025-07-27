@@ -42,7 +42,7 @@ const FeaturedProducts = () => {
       case 'newest':
         return b.name.localeCompare(a.name)
       case 'rating':
-        return Math.random() - 0.5 // Random for demo
+        return a.name.localeCompare(b.name) // Consistent sorting
       default:
         return 0
     }
