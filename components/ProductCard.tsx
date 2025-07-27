@@ -34,9 +34,8 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, priority = false }) 
     setIsWishlisted(!isWishlisted)
   }
 
-  // Static rating for demo (in real app, this would come from API)
-  const rating = 4.5
-  const reviewCount = 127
+  // Get static rating to prevent hydration mismatch
+  const { rating, reviewCount } = getProductRating(product.id)
 
   return (
     <div className="product-card group relative p-4 h-full flex flex-col">
