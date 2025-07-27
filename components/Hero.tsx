@@ -54,7 +54,7 @@ const Hero = () => {
             <div className="inline-flex items-center space-x-3 bg-gradient-to-r from-yellow-600 to-orange-600 text-black rounded-full px-6 py-3 shadow-2xl animate-pulse-gold sparkle-container">
               <Zap className="w-5 h-5 animate-sparkle" />
               <span className="text-sm font-black uppercase tracking-wider">NEW COLLECTION DROP</span>
-              <Fire className="w-5 h-5 animate-sparkle" />
+              <Flame className="w-5 h-5 animate-sparkle" />
             </div>
 
             {/* Explosive Heading */}
@@ -137,7 +137,7 @@ const Hero = () => {
                   
                   {/* Hot Badge */}
                   <div className="absolute top-4 left-4 badge badge-hot animate-pulse-gold">
-                    <Fire className="w-3 h-3" />
+                    <Flame className="w-3 h-3" />
                     <span>HOT</span>
                   </div>
                 </div>
