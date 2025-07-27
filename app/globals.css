@@ -189,8 +189,12 @@ body {
   }
 
   .overlay-content {
-    @apply absolute bottom-0 left-0 right-0 p-6 text-white transform translate-y-full transition-transform duration-300 group-hover:translate-y-0;
+    @apply absolute bottom-0 left-0 right-0 p-6 text-white transform translate-y-full transition-transform duration-300;
     background: linear-gradient(transparent, rgba(0,0,0,0.8));
+  }
+
+  .group:hover .overlay-content {
+    @apply translate-y-0;
   }
 }
 
