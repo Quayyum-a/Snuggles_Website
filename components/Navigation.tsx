@@ -7,7 +7,7 @@ import { Search, User, ShoppingBag, Menu, X, Heart } from 'lucide-react'
 import { useCart } from '@/contexts/CartContext'
 
 const Navigation = () => {
-  const { items } = useCart()
+  const { items, openCart } = useCart()
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [isScrolled, setIsScrolled] = useState(false)
   const itemCount = items.reduce((sum, item) => sum + item.quantity, 0)
