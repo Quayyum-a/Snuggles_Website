@@ -17,8 +17,8 @@ export default function ProductPage() {
   const product = getProductById(productId)
   
   const { addItem } = useCart()
-  const [selectedSize, setSelectedSize] = useState('')
-  const [selectedColor, setSelectedColor] = useState('')
+  const [selectedSize, setSelectedSize] = useState(product?.sizes[0] || '')
+  const [selectedColor, setSelectedColor] = useState(product?.colors[0] || '')
   const [quantity, setQuantity] = useState(1)
   const [activeImageIndex, setActiveImageIndex] = useState(0)
   const [isWishlisted, setIsWishlisted] = useState(false)
