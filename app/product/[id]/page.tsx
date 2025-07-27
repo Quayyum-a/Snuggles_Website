@@ -346,7 +346,7 @@ export default function ProductPage() {
                     />
                   </div>
                   <h3 className="text-sm font-medium text-gray-900">{relatedProduct.name}</h3>
-                  <p className="text-sm text-gray-600">${relatedProduct.price}</p>
+                  <p className="text-sm text-gray-600">₦{relatedProduct.price.toLocaleString()}</p>
                 </Link>
               ))}
             </div>
