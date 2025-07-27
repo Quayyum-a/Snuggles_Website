@@ -3,7 +3,7 @@
 import React from 'react'
 import ProductCard from './ProductCard'
 import { getFeaturedProducts } from '@/lib/products'
-import { ArrowRight, Sparkles, Crown, Fire, Zap, Star } from 'lucide-react'
+import { ArrowRight, Sparkles, Crown, Flame, Zap, Star } from 'lucide-react'
 import Link from 'next/link'
 
 const FeaturedProducts = () => {
@@ -32,7 +32,7 @@ const FeaturedProducts = () => {
           <div className="inline-flex items-center space-x-4 bg-gradient-to-r from-yellow-600 to-orange-600 text-black rounded-full px-8 py-4 mb-8 shadow-2xl animate-pulse-gold magnetic">
             <Crown className="w-6 h-6 animate-sparkle" />
             <span className="text-sm font-black uppercase tracking-widest">FEATURED COLLECTION</span>
-            <Fire className="w-6 h-6 animate-sparkle" />
+            <Flame className="w-6 h-6 animate-sparkle" />
           </div>
           
           <h2 className="text-5xl lg:text-7xl font-black font-playfair mb-8 leading-none">
