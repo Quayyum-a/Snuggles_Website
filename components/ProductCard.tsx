@@ -4,7 +4,7 @@ import React, { useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { Product } from '@/lib/types'
-import { ShoppingBag, Heart, Eye, Star, Zap, Fire, Crown, Sparkles } from 'lucide-react'
+import { ShoppingBag, Heart, Eye, Star, Zap, Flame, Crown, Sparkles } from 'lucide-react'
 import { useCart } from '@/contexts/CartContext'
 
 interface ProductCardProps {
@@ -88,7 +88,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, priority = false }) 
           <div className="absolute top-3 left-3 space-y-2">
             {product.drop && (
               <div className="badge badge-hot animate-pulse-gold">
-                <Fire className="w-3 h-3" />
+                <Flame className="w-3 h-3" />
                 <span>HOT DROP</span>
               </div>
             )}
