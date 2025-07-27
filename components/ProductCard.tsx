@@ -1,10 +1,11 @@
 'use client'
 
-import React from 'react'
+import React, { useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { Product } from '@/lib/types'
-import { ShoppingBag, Zap } from 'lucide-react'
+import { ShoppingBag, Zap, Plus } from 'lucide-react'
+import { useCart } from '@/contexts/CartContext'
 
 interface ProductCardProps {
   product: Product
@@ -12,6 +13,18 @@ interface ProductCardProps {
 }
 
 const ProductCard: React.FC<ProductCardProps> = ({ product, priority = false }) => {
+  const { addItem } = useCart()
+  const [selectedSize, setSelectedSize] = useState(product.sizes[0])
+  const [selectedColor, setSelectedColor] = useState(product.colors[0])
+
+  const handleAddToCart = (e: React.MouseEvent) => {
+    e.preventDefault()
+    e.stopPropagation()
+
+    if (product.inStock) {
+      addItem(product, selectedSize, selectedColor)
+    }
+  }
   return (
     <div className="group relative product-card-hover">
       <Link href={`/product/${product.id}`}>
