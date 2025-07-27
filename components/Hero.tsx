@@ -1,192 +1,233 @@
 'use client'
 
-import React, { useState, useEffect } from 'react'
-import { ArrowDown, Play, Volume2, VolumeX, Sparkles, Flame } from 'lucide-react'
+import React from 'react'
+import { ArrowRight, Star, Truck, Shield } from 'lucide-react'
 import Link from 'next/link'
+import Image from 'next/image'
 
 const Hero = () => {
-  const [currentSlogan, setCurrentSlogan] = useState(0)
-  const [isPlaying, setIsPlaying] = useState(false)
-
-  const slogans = [
-    "WE DON'T SELL CLOTHES",
-    "WE SELL ATTITUDE",
-    "WE SELL ENERGY",
-    "WE SELL COMMUNITY"
-  ]
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentSlogan((prev) => (prev + 1) % slogans.length)
-    }, 2500)
-    return () => clearInterval(interval)
-  }, [])
-
   return (
-    <section className="min-h-screen relative overflow-hidden bg-black">
-      {/* Animated Background Grid */}
-      <div className="absolute inset-0">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,#d4a422_0%,transparent_50%)] opacity-10"></div>
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_80%_80%,#d4a422_0%,transparent_50%)] opacity-10"></div>
-        <div className="absolute inset-0" style={{
-          backgroundImage: `
-            linear-gradient(0deg, rgba(212,164,34,0.1) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(212,164,34,0.1) 1px, transparent 1px)
-          `,
-          backgroundSize: '60px 60px',
-          animation: 'gridMove 20s ease-in-out infinite'
-        }}></div>
-      </div>
+    <section className="bg-gray-50">
+      {/* Main Hero */}
+      <div className="relative bg-white overflow-hidden">
+        <div className="max-w-7xl mx-auto">
+          <div className="relative z-10 pb-8 bg-white sm:pb-16 md:pb-20 lg:max-w-2xl lg:w-full lg:pb-28 xl:pb-32">
+            <svg
+              className="hidden lg:block absolute right-0 inset-y-0 h-full w-48 text-white transform translate-x-1/2"
+              fill="currentColor"
+              viewBox="0 0 100 100"
+              preserveAspectRatio="none"
+              aria-hidden="true"
+            >
+              <polygon points="50,0 100,0 50,100 0,100" />
+            </svg>
 
-      {/* Floating Particles */}
-      <div className="absolute inset-0 overflow-hidden">
-        {[...Array(12)].map((_, i) => (
-          <div
-            key={i}
-            className="absolute w-2 h-2 bg-gold rounded-full opacity-30"
-            style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-              animation: `float ${3 + Math.random() * 4}s ease-in-out infinite`,
-              animationDelay: `${Math.random() * 2}s`
-            }}
-          />
-        ))}
-      </div>
+            <div className="relative pt-6 px-4 sm:px-6 lg:px-8">
+              <main className="mt-10 mx-auto max-w-7xl px-4 sm:mt-12 sm:px-6 md:mt-16 lg:mt-20 lg:px-8 xl:mt-28">
+                <div className="sm:text-center lg:text-left">
+                  {/* Badge */}
+                  <div className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-gold text-white mb-4">
+                    New Collection
+                  </div>
 
-      {/* Video Background Overlay */}
-      <div className="absolute top-4 right-4 z-20">
-        <button
-          onClick={() => setIsPlaying(!isPlaying)}
-          className="flex items-center space-x-2 bg-black/80 border border-gold/30 rounded-full px-4 py-2 backdrop-blur-sm hover:border-gold transition-all duration-300"
-        >
-          {isPlaying ? <VolumeX size={16} className="text-gold" /> : <Volume2 size={16} className="text-gold" />}
-          <span className="text-gold text-sm font-medium">VIBE</span>
-        </button>
-      </div>
+                  <h1 className="text-4xl tracking-tight font-extrabold text-gray-900 sm:text-5xl md:text-6xl">
+                    <span className="block xl:inline">Your Comfort</span>{' '}
+                    <span className="block text-gold xl:inline">Has Arrived</span>
+                  </h1>
+                  
+                  <p className="mt-3 text-base text-gray-500 sm:mt-5 sm:text-lg sm:max-w-xl sm:mx-auto md:mt-5 md:text-xl lg:mx-0">
+                    Premium streetwear that blends Lagos street culture with global fashion. 
+                    Crafted for comfort, designed for impact.
+                  </p>
 
-      {/* Main Content */}
-      <div className="relative z-10 flex items-center justify-center min-h-screen">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                  {/* CTA Buttons */}
+                  <div className="mt-5 sm:mt-8 sm:flex sm:justify-center lg:justify-start">
+                    <div className="rounded-md shadow">
+                      <Link
+                        href="/shop"
+                        className="nike-button flex items-center justify-center px-8 py-3 text-base font-medium rounded-md text-white md:py-4 md:text-lg md:px-10"
+                      >
+                        Shop Now
+                        <ArrowRight className="ml-2 h-5 w-5" />
+                      </Link>
+                    </div>
+                    <div className="mt-3 sm:mt-0 sm:ml-3">
+                      <Link
+                        href="/new"
+                        className="w-full flex items-center justify-center px-8 py-3 border border-gray-300 text-base font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 md:py-4 md:text-lg md:px-10"
+                      >
+                        New Arrivals
+                      </Link>
+                    </div>
+                  </div>
 
-            {/* Left Side - Brand Statement */}
-            <div className="text-left">
-              {/* Badge */}
-              <div className="inline-flex items-center space-x-2 bg-gradient-to-r from-gold/20 to-gold/10 border border-gold/50 rounded-full px-6 py-2 mb-8 backdrop-blur-sm">
-                <Sparkles size={16} className="text-gold" />
-                <span className="text-gold text-sm font-bold tracking-wide">LAGOS BORN • GLOBALLY WORN</span>
-              </div>
-
-              {/* Main Headline */}
-              <h1 className="text-5xl md:text-8xl font-black mb-6 leading-tight">
-                <span className="block text-white">STREET</span>
-                <span className="block bg-gradient-to-r from-gold via-yellow-400 to-gold bg-clip-text text-transparent animate-pulse">
-                  CULTURE
-                </span>
-                <span className="block text-white">REDEFINED</span>
-              </h1>
-
-              {/* Dynamic Slogan */}
-              <div className="h-16 mb-8">
-                <p className="text-2xl md:text-3xl font-bold text-gold transition-all duration-500">
-                  {slogans[currentSlogan]}
-                </p>
-              </div>
-
-              {/* Description */}
-              <p className="text-lg md:text-xl text-gray-300 leading-relaxed mb-8 max-w-lg">
-                From the vibrant streets of <span className="text-gold font-semibold">Lagos</span> to global fashion capitals.
-                We craft premium streetwear that speaks the language of <span className="text-gold font-semibold">rebellion</span>,
-                <span className="text-gold font-semibold"> comfort</span>, and <span className="text-gold font-semibold">authenticity</span>.
-              </p>
-
-              {/* CTA Buttons */}
-              <div className="flex flex-col sm:flex-row gap-4 mb-12">
-                <Link
-                  href="/shop"
-                  className="group relative bg-gold text-black font-black text-lg px-8 py-4 rounded-none border-4 border-gold hover:bg-transparent hover:text-gold transition-all duration-300 overflow-hidden"
-                >
-                  <span className="relative z-10 flex items-center justify-center space-x-2">
-                    <span>SHOP THE CULTURE</span>
-                    <Flame size={20} className="group-hover:animate-bounce" />
-                  </span>
-                  <div className="absolute inset-0 bg-gold transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></div>
-                </Link>
-
-                <Link
-                  href="/drops"
-                  className="group border-2 border-gold text-gold font-bold text-lg px-8 py-4 rounded-none hover:bg-gold hover:text-black transition-all duration-300 flex items-center justify-center space-x-2"
-                >
-                  <Play size={16} className="group-hover:translate-x-1 transition-transform duration-300" />
-                  <span>WATCH DROPS</span>
-                </Link>
-              </div>
-
-              {/* Stats */}
-              <div className="flex space-x-8">
-                <div className="text-center">
-                  <div className="text-2xl font-black text-gold">100K+</div>
-                  <div className="text-sm text-gray-400">COMMUNITY</div>
-                </div>
-                <div className="text-center">
-                  <div className="text-2xl font-black text-gold">50+</div>
-                  <div className="text-sm text-gray-400">DROPS</div>
-                </div>
-                <div className="text-center">
-                  <div className="text-2xl font-black text-gold">24/7</div>
-                  <div className="text-sm text-gray-400">STREET MODE</div>
-                </div>
-              </div>
-            </div>
-
-            {/* Right Side - Visual Hero */}
-            <div className="relative">
-              {/* Main Hero Image */}
-              <div className="relative group cursor-pointer">
-                <div className="absolute inset-0 bg-gradient-to-tr from-gold/20 via-transparent to-gold/20 rounded-2xl transform rotate-3 group-hover:rotate-6 transition-transform duration-500"></div>
-                <div className="relative bg-gradient-to-br from-gray-900 via-black to-gray-900 rounded-2xl overflow-hidden border-2 border-gold/30 group-hover:border-gold/60 transition-all duration-500">
-                  <img
-                    src="https://cdn.builder.io/api/v1/image/assets%2Fe4be0ebfbe0245c78c482ccb62c8df0a%2F8d63283de99d4fb592a98f736653490a?format=webp&width=800"
-                    alt="Lagos Street Culture"
-                    className="w-full h-96 object-cover group-hover:scale-110 transition-transform duration-700"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
-                  <div className="absolute bottom-6 left-6 right-6">
-                    <div className="flex items-center justify-between">
-                      <div>
-                        <div className="text-gold font-bold text-sm mb-1">BORN IN LAGOS</div>
-                        <div className="text-white font-bold text-lg">Premium Street Energy</div>
-                      </div>
-                      <div className="w-12 h-12 bg-gold rounded-full flex items-center justify-center">
-                        <Play size={20} className="text-black ml-1" />
-                      </div>
+                  {/* Features */}
+                  <div className="mt-8 grid grid-cols-3 gap-4 text-center sm:text-left">
+                    <div className="flex items-center space-x-2">
+                      <Truck className="h-5 w-5 text-gold" />
+                      <span className="text-sm text-gray-600">Free Shipping</span>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <Shield className="h-5 w-5 text-gold" />
+                      <span className="text-sm text-gray-600">Authentic</span>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <Star className="h-5 w-5 text-gold" />
+                      <span className="text-sm text-gray-600">Premium Quality</span>
                     </div>
                   </div>
                 </div>
-              </div>
-
-              {/* Floating Brand Elements */}
-              <div className="absolute -top-8 -right-8 w-24 h-24 bg-gradient-to-br from-gold to-yellow-500 rounded-full flex items-center justify-center font-black text-black text-xl animate-spin-slow">
-                S
-              </div>
-
-              <div className="absolute -bottom-4 -left-4 bg-black border-2 border-gold rounded-lg p-4 backdrop-blur-sm">
-                <div className="text-gold font-bold text-sm">EST. 2024</div>
-                <div className="text-white font-bold">LAGOS, NG</div>
-              </div>
+              </main>
             </div>
           </div>
         </div>
+        
+        <div className="lg:absolute lg:inset-y-0 lg:right-0 lg:w-1/2">
+          <Image
+            className="h-56 w-full object-cover sm:h-72 md:h-96 lg:w-full lg:h-full"
+            src="https://cdn.builder.io/api/v1/image/assets%2Fe4be0ebfbe0245c78c482ccb62c8df0a%2F8d63283de99d4fb592a98f736653490a?format=webp&width=800"
+            alt="SNUGGLES Street Culture"
+            width={800}
+            height={600}
+            priority
+          />
+        </div>
       </div>
 
-      {/* Scroll Indicator */}
-      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
-        <div className="flex flex-col items-center space-y-2">
-          <div className="w-6 h-10 border-2 border-gold rounded-full flex justify-center">
-            <div className="w-1 h-3 bg-gold rounded-full mt-2 animate-pulse"></div>
+      {/* Product Showcase */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <div className="text-center mb-12">
+          <h2 className="text-3xl font-extrabold text-gray-900 sm:text-4xl">
+            Featured Products
+          </h2>
+          <p className="mt-4 text-lg text-gray-600">
+            Discover our most popular streetwear pieces
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          {/* Featured Product 1 */}
+          <div className="group relative">
+            <div className="aspect-w-1 aspect-h-1 w-full overflow-hidden rounded-lg bg-gray-200">
+              <Image
+                src="https://cdn.builder.io/api/v1/image/assets%2Fe4be0ebfbe0245c78c482ccb62c8df0a%2F39e25d9778c8423db7ee03df6ca707b4?format=webp&width=800"
+                alt="PANDIT Psychedelic Tee"
+                className="h-full w-full object-cover object-center group-hover:opacity-75"
+                width={400}
+                height={400}
+              />
+            </div>
+            <div className="mt-4 flex justify-between">
+              <div>
+                <h3 className="text-sm text-gray-700">
+                  <Link href="/product/snuggles-pandit-tee">
+                    <span aria-hidden="true" className="absolute inset-0" />
+                    PANDIT Psychedelic Tee
+                  </Link>
+                </h3>
+                <p className="mt-1 text-sm text-gray-500">Mind-bending street art</p>
+              </div>
+              <p className="text-sm font-medium text-gray-900">$65</p>
+            </div>
           </div>
-          <span className="text-gold text-xs font-medium">SCROLL</span>
+
+          {/* Featured Product 2 */}
+          <div className="group relative">
+            <div className="aspect-w-1 aspect-h-1 w-full overflow-hidden rounded-lg bg-gray-200">
+              <Image
+                src="https://cdn.builder.io/api/v1/image/assets%2Fe4be0ebfbe0245c78c482ccb62c8df0a%2F6f4925ee968d401a9f2da1cf1e7dbb55?format=webp&width=800"
+                alt="Rainbow Comfort Hoodie"
+                className="h-full w-full object-cover object-center group-hover:opacity-75"
+                width={400}
+                height={400}
+              />
+            </div>
+            <div className="mt-4 flex justify-between">
+              <div>
+                <h3 className="text-sm text-gray-700">
+                  <Link href="/product/snuggles-rainbow-hoodie">
+                    <span aria-hidden="true" className="absolute inset-0" />
+                    Rainbow Comfort Hoodie
+                  </Link>
+                </h3>
+                <p className="mt-1 text-sm text-gray-500">Premium comfort</p>
+              </div>
+              <p className="text-sm font-medium text-gray-900">$95</p>
+            </div>
+          </div>
+
+          {/* Featured Product 3 */}
+          <div className="group relative">
+            <div className="aspect-w-1 aspect-h-1 w-full overflow-hidden rounded-lg bg-gray-200">
+              <Image
+                src="https://cdn.builder.io/api/v1/image/assets%2Fe4be0ebfbe0245c78c482ccb62c8df0a%2F49dab3b2da1b46b48f7c4280df20127c?format=webp&width=800"
+                alt="The Kids Next Door Tee"
+                className="h-full w-full object-cover object-center group-hover:opacity-75"
+                width={400}
+                height={400}
+              />
+            </div>
+            <div className="mt-4 flex justify-between">
+              <div>
+                <h3 className="text-sm text-gray-700">
+                  <Link href="/product/kids-next-door-tee">
+                    <span aria-hidden="true" className="absolute inset-0" />
+                    The Kids Next Door Tee
+                  </Link>
+                </h3>
+                <p className="mt-1 text-sm text-gray-500">Nostalgic vibes</p>
+              </div>
+              <p className="text-sm font-medium text-gray-900">$55</p>
+            </div>
+          </div>
+        </div>
+
+        <div className="mt-12 text-center">
+          <Link
+            href="/shop"
+            className="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-gray-900 hover:bg-gray-800"
+          >
+            View All Products
+            <ArrowRight className="ml-2 h-5 w-5" />
+          </Link>
+        </div>
+      </div>
+
+      {/* Newsletter Signup */}
+      <div className="bg-gray-900">
+        <div className="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:py-16 lg:px-8 lg:flex lg:items-center">
+          <div className="lg:w-0 lg:flex-1">
+            <h2 className="text-3xl font-extrabold tracking-tight text-white sm:text-4xl">
+              Stay updated with our latest drops
+            </h2>
+            <p className="mt-3 max-w-3xl text-lg leading-6 text-gray-300">
+              Be the first to know about new collections, exclusive releases, and special offers.
+            </p>
+          </div>
+          <div className="mt-8 lg:mt-0 lg:ml-8">
+            <form className="sm:flex">
+              <label htmlFor="email-address" className="sr-only">
+                Email address
+              </label>
+              <input
+                id="email-address"
+                name="email-address"
+                type="email"
+                autoComplete="email"
+                required
+                className="w-full px-5 py-3 border border-transparent placeholder-gray-500 focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white focus:border-white sm:max-w-xs rounded-md"
+                placeholder="Enter your email"
+              />
+              <div className="mt-3 rounded-md shadow sm:mt-0 sm:ml-3 sm:flex-shrink-0">
+                <button
+                  type="submit"
+                  className="w-full flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-white bg-gold hover:bg-gold-light focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-gold"
+                >
+                  Subscribe
+                </button>
+              </div>
+            </form>
+          </div>
         </div>
       </div>
     </section>
