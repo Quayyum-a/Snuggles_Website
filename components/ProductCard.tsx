@@ -4,7 +4,7 @@ import React, { useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { Product } from '@/lib/types'
-import { ShoppingBag, Zap, Plus, Sparkles } from 'lucide-react'
+import { ShoppingBag, Star, Heart, Eye } from 'lucide-react'
 import { useCart } from '@/contexts/CartContext'
 
 interface ProductCardProps {
@@ -16,176 +16,195 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, priority = false }) 
   const { addItem } = useCart()
   const [selectedSize, setSelectedSize] = useState(product.sizes[0])
   const [selectedColor, setSelectedColor] = useState(product.colors[0])
+  const [isWishlisted, setIsWishlisted] = useState(false)
 
   const handleAddToCart = (e: React.MouseEvent) => {
     e.preventDefault()
     e.stopPropagation()
-
+    
     if (product.inStock) {
       addItem(product, selectedSize, selectedColor)
     }
   }
+
+  const handleWishlist = (e: React.MouseEvent) => {
+    e.preventDefault()
+    e.stopPropagation()
+    setIsWishlisted(!isWishlisted)
+  }
+
+  // Generate random rating for demo (in real app, this would come from API)
+  const rating = 4.2 + Math.random() * 0.7
+  const reviewCount = Math.floor(Math.random() * 500) + 50
+
   return (
-    <div className="group relative transform transition-all duration-500 hover:scale-105">
-      <Link href={`/product/${product.id}`}>
-        <div className="relative bg-gradient-to-br from-gray-900 via-black to-gray-900 border-2 border-gold/20 rounded-none overflow-hidden hover:border-gold/60 transition-all duration-500">
-          {/* Product Image */}
-          <div className="relative aspect-square overflow-hidden">
-            <Image
-              src={product.image}
-              alt={product.name}
-              fill
-              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-              className="object-cover group-hover:scale-110 transition-transform duration-700"
-              priority={priority}
+    <div className="product-card group relative p-4 h-full flex flex-col">
+      <Link href={`/product/${product.id}`} className="flex-1">
+        {/* Product Image */}
+        <div className="relative aspect-square overflow-hidden rounded-lg bg-gray-100 mb-4">
+          <Image
+            src={product.image}
+            alt={product.name}
+            fill
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+            className="object-cover group-hover:scale-105 transition-transform duration-300"
+            priority={priority}
+          />
+          
+          {/* Wishlist Button */}
+          <button
+            onClick={handleWishlist}
+            className="absolute top-2 right-2 p-2 bg-white rounded-full shadow-md hover:shadow-lg transition-shadow duration-200"
+          >
+            <Heart 
+              size={16} 
+              className={`${isWishlisted ? 'text-red-500 fill-current' : 'text-gray-400'}`} 
             />
+          </button>
 
-            {/* Gradient Overlay */}
-            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-
-            {/* Interactive Overlay */}
-            <div className="absolute inset-0 bg-black/90 opacity-0 group-hover:opacity-100 transition-all duration-300 flex flex-col items-center justify-center p-6">
-              {product.inStock ? (
-                <div className="text-center space-y-4">
-                  {/* Quick Info */}
-                  <div className="mb-4">
-                    <div className="text-gold font-black text-lg mb-2">${product.price}</div>
-                    <div className="text-white font-bold text-sm">{product.name}</div>
-                  </div>
-
-                  {/* Size Selection */}
-                  <div className="mb-4">
-                    <p className="text-gold text-xs font-bold mb-2 tracking-wide">SELECT SIZE:</p>
-                    <div className="flex justify-center space-x-1">
-                      {product.sizes.slice(0, 4).map((size) => (
-                        <button
-                          key={size}
-                          onClick={(e) => {
-                            e.preventDefault()
-                            e.stopPropagation()
-                            setSelectedSize(size)
-                          }}
-                          className={`text-xs px-3 py-2 border-2 font-bold transition-all duration-300 ${
-                            selectedSize === size
-                              ? 'border-gold bg-gold text-black'
-                              : 'border-gold/50 text-gold hover:border-gold hover:bg-gold/20'
-                          }`}
-                        >
-                          {size}
-                        </button>
-                      ))}
-                    </div>
-                  </div>
-
-                  {/* Quick Add Button */}
-                  <button
-                    onClick={handleAddToCart}
-                    className="bg-gold text-black font-black px-6 py-3 w-full hover:bg-yellow-400 transition-colors duration-300 flex items-center justify-center space-x-2 group/btn"
-                  >
-                    <Plus size={18} className="group-hover/btn:rotate-90 transition-transform duration-300" />
-                    <span>ADD TO CART</span>
-                  </button>
-                </div>
-              ) : (
-                <div className="text-center">
-                  <div className="text-red-400 font-black text-lg mb-2">SOLD OUT</div>
-                  <div className="text-gray-400 text-sm">Notify when restocked</div>
-                </div>
-              )}
+          {/* Sale Badge */}
+          {product.drop && (
+            <div className="absolute top-2 left-2 bg-red-500 text-white text-xs font-bold px-2 py-1 rounded">
+              LIMITED
             </div>
+          )}
 
-            {/* Status Badges */}
-            <div className="absolute top-3 left-3 space-y-2">
-              {product.drop && (
-                <div className="bg-red-500 text-white text-xs font-black px-3 py-1 flex items-center space-x-1 animate-pulse">
-                  <Zap size={12} />
-                  <span>LIMITED DROP</span>
-                </div>
-              )}
+          {/* Quick View */}
+          <div className="absolute inset-0 bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+            <button className="bg-white text-gray-900 px-4 py-2 rounded-md font-medium flex items-center space-x-2 hover:bg-gray-100">
+              <Eye size={16} />
+              <span>Quick View</span>
+            </button>
+          </div>
+        </div>
 
-              {product.featured && (
-                <div className="bg-gold text-black text-xs font-black px-3 py-1">
-                  CULTURE PICK
-                </div>
-              )}
+        {/* Product Info */}
+        <div className="flex-1 flex flex-col">
+          {/* Brand & Category */}
+          <p className="text-xs text-gray-500 uppercase tracking-wide mb-1">
+            SNUGGLES • {product.category}
+          </p>
+          
+          {/* Product Name */}
+          <h3 className="text-sm font-medium text-gray-900 mb-2 line-clamp-2 flex-1">
+            {product.name}
+          </h3>
+          
+          {/* Rating */}
+          <div className="flex items-center mb-2">
+            <div className="star-rating">
+              {[...Array(5)].map((_, i) => (
+                <Star
+                  key={i}
+                  size={12}
+                  className={`${
+                    i < Math.floor(rating) 
+                      ? 'text-yellow-400 fill-current' 
+                      : 'text-gray-300'
+                  }`}
+                />
+              ))}
             </div>
+            <span className="text-xs text-gray-600 ml-1">
+              {rating.toFixed(1)} ({reviewCount})
+            </span>
+          </div>
 
-            {/* Quick Action Button */}
-            <div className="absolute top-3 right-3">
-              <button className="w-10 h-10 bg-black/80 border border-gold/30 rounded-full flex items-center justify-center text-gold hover:bg-gold hover:text-black transition-all duration-300 opacity-0 group-hover:opacity-100">
-                <ShoppingBag size={16} />
-              </button>
+          {/* Price */}
+          <div className="mb-3">
+            <span className="price-display">${product.price}</span>
+            {product.drop && (
+              <span className="original-price ml-2">${(product.price * 1.2).toFixed(0)}</span>
+            )}
+          </div>
+
+          {/* Color Options */}
+          <div className="mb-3">
+            <p className="text-xs text-gray-600 mb-1">Colors:</p>
+            <div className="flex space-x-1">
+              {product.colors.slice(0, 4).map((color, index) => (
+                <button
+                  key={index}
+                  onClick={(e) => {
+                    e.preventDefault()
+                    e.stopPropagation()
+                    setSelectedColor(color)
+                  }}
+                  className={`w-4 h-4 rounded-full border-2 ${
+                    selectedColor === color ? 'border-gray-900' : 'border-gray-300'
+                  }`}
+                  style={{
+                    backgroundColor: 
+                      color.toLowerCase() === 'gold' ? '#d4a422' : 
+                      color.toLowerCase() === 'white' ? '#ffffff' : '#000000'
+                  }}
+                  title={color}
+                />
+              ))}
+              {product.colors.length > 4 && (
+                <span className="text-xs text-gray-500">+{product.colors.length - 4}</span>
+              )}
             </div>
           </div>
 
-          {/* Product Info */}
-          <div className="p-5 border-t border-gold/20">
-            {/* Header */}
-            <div className="flex items-start justify-between mb-3">
-              <div className="flex-1">
-                <h3 className="text-white font-black text-lg leading-tight group-hover:text-gold transition-colors duration-300">
-                  {product.name}
-                </h3>
-                <p className="text-gray-400 text-xs font-medium tracking-wide mt-1">
-                  {product.category.toUpperCase()} COLLECTION
-                </p>
-              </div>
-              <div className="text-right">
-                <div className="text-2xl font-black text-gold">
-                  ${product.price}
-                </div>
-              </div>
+          {/* Size Options */}
+          <div className="mb-4">
+            <p className="text-xs text-gray-600 mb-1">Sizes:</p>
+            <div className="flex space-x-1">
+              {product.sizes.slice(0, 4).map((size) => (
+                <button
+                  key={size}
+                  onClick={(e) => {
+                    e.preventDefault()
+                    e.stopPropagation()
+                    setSelectedSize(size)
+                  }}
+                  className={`text-xs px-2 py-1 border rounded ${
+                    selectedSize === size 
+                      ? 'border-gray-900 bg-gray-900 text-white' 
+                      : 'border-gray-300 text-gray-700 hover:border-gray-400'
+                  }`}
+                >
+                  {size}
+                </button>
+              ))}
             </div>
+          </div>
 
-            {/* Description */}
-            <p className="text-gray-300 text-sm mb-4 line-clamp-2 leading-relaxed">
-              {product.description}
-            </p>
-
-            {/* Colors & Sizes */}
-            <div className="flex items-center justify-between mb-4">
-              <div className="flex space-x-2">
-                {product.colors.slice(0, 3).map((color, index) => (
-                  <div
-                    key={index}
-                    className="w-5 h-5 rounded-full border-2 border-gold/50 hover:border-gold transition-colors duration-300"
-                    style={{
-                      backgroundColor: color.toLowerCase() === 'gold' ? '#d4a422' :
-                                     color.toLowerCase() === 'white' ? '#ffffff' : '#000000'
-                    }}
-                    title={color}
-                  />
-                ))}
-              </div>
-
-              <div className="flex space-x-1">
-                {product.sizes.slice(0, 3).map((size) => (
-                  <span
-                    key={size}
-                    className="text-xs px-2 py-1 border border-gold/30 text-gold font-medium"
-                  >
-                    {size}
-                  </span>
-                ))}
-              </div>
-            </div>
-
-            {/* Stock Status */}
-            <div className="flex items-center justify-between">
-              <span className={`text-xs font-bold ${
-                product.inStock ? 'text-green-400' : 'text-red-400'
-              }`}>
-                {product.inStock ? '✓ IN STOCK' : '✗ SOLD OUT'}
+          {/* Stock Status */}
+          <div className="mb-3">
+            <span className={`text-xs ${product.inStock ? 'text-green-600' : 'text-red-600'}`}>
+              {product.inStock ? '✓ In Stock' : '✗ Out of Stock'}
+            </span>
+            {product.inStock && (
+              <span className="text-xs text-gray-500 ml-2">
+                • Fast delivery available
               </span>
-
-              <div className="flex items-center space-x-1">
-                <Sparkles size={12} className="text-gold" />
-                <span className="text-xs text-gold font-medium">AUTHENTIC</span>
-              </div>
-            </div>
+            )}
           </div>
         </div>
       </Link>
+
+      {/* Add to Cart Button */}
+      <button
+        onClick={handleAddToCart}
+        disabled={!product.inStock}
+        className={`w-full mt-auto py-2 px-4 rounded-md font-medium text-sm transition-colors duration-200 flex items-center justify-center space-x-2 ${
+          product.inStock
+            ? 'amazon-button hover:amazon-button'
+            : 'bg-gray-200 text-gray-500 cursor-not-allowed'
+        }`}
+      >
+        <ShoppingBag size={16} />
+        <span>{product.inStock ? 'Add to Cart' : 'Out of Stock'}</span>
+      </button>
+
+      {/* Prime Shipping */}
+      {product.inStock && (
+        <p className="text-xs text-blue-600 mt-2 text-center">
+          🚚 FREE delivery in Lagos
+        </p>
+      )}
     </div>
   )
 }
