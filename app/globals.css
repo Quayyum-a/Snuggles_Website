@@ -91,8 +91,54 @@ a {
   animation: float 3s ease-in-out infinite;
 }
 
+.animate-spin-slow {
+  animation: spin 8s linear infinite;
+}
+
 .text-shadow-gold {
   text-shadow: 0 0 10px rgba(212, 164, 34, 0.5);
+}
+
+.glitch {
+  position: relative;
+  color: white;
+  font-size: 4rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  animation: glitch 2s infinite;
+}
+
+.glitch::before,
+.glitch::after {
+  content: attr(data-text);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.glitch::before {
+  animation: glitch-1 0.5s infinite;
+  color: #d4a422;
+  z-index: -1;
+}
+
+.glitch::after {
+  animation: glitch-2 0.5s infinite;
+  color: #ff0000;
+  z-index: -2;
+}
+
+.street-vibe {
+  background: linear-gradient(45deg, #000, #1a1a1a, #000);
+  background-size: 400% 400%;
+  animation: streetMove 15s ease infinite;
+}
+
+.text-stroke {
+  -webkit-text-stroke: 2px #d4a422;
+  -webkit-text-fill-color: transparent;
 }
 
 .product-card-hover {
@@ -126,4 +172,41 @@ a {
 @keyframes blink-caret {
   from, to { border-color: transparent }
   50% { border-color: #d4a422; }
+}
+
+@keyframes gridMove {
+  0%, 100% { transform: translate(0, 0); }
+  25% { transform: translate(10px, 5px); }
+  50% { transform: translate(-5px, 10px); }
+  75% { transform: translate(5px, -5px); }
+}
+
+@keyframes glitch {
+  0%, 90%, 100% { transform: translate(0); }
+  20% { transform: translate(-2px, 2px); }
+  40% { transform: translate(-2px, -2px); }
+  60% { transform: translate(2px, 2px); }
+  80% { transform: translate(2px, -2px); }
+}
+
+@keyframes glitch-1 {
+  0%, 90%, 100% { transform: translate(0); }
+  20% { transform: translate(2px, -2px); }
+  40% { transform: translate(-2px, 2px); }
+  60% { transform: translate(-2px, -2px); }
+  80% { transform: translate(2px, 2px); }
+}
+
+@keyframes glitch-2 {
+  0%, 90%, 100% { transform: translate(0); }
+  20% { transform: translate(-2px, 1px); }
+  40% { transform: translate(1px, -1px); }
+  60% { transform: translate(1px, 1px); }
+  80% { transform: translate(-1px, -1px); }
+}
+
+@keyframes streetMove {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
 }
