@@ -1,26 +1,37 @@
 'use client'
 
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import ProductCard from './ProductCard'
 import { getFeaturedProducts } from '@/lib/products'
 import { ArrowRight, Sparkles, Crown, Flame, Zap, Star } from 'lucide-react'
 import Link from 'next/link'
 
 const FeaturedProducts = () => {
-  const featuredProducts = getFeaturedProducts()
+  const featuredProducts = getFeaturedProducts();
+  const [particles, setParticles] = useState<Array<{left: number, top: number, delay: number}>>([]);
+
+  useEffect(() => {
+    // Generate particles only on client side to avoid hydration mismatch
+    const generatedParticles = Array.from({ length: 15 }, () => ({
+      left: Math.random() * 100,
+      top: Math.random() * 100,
+      delay: Math.random() * 3
+    }));
+    setParticles(generatedParticles);
+  }, []);
 
   return (
     <section className="py-24 bg-gradient-to-b from-black via-gray-900 to-black relative overflow-hidden">
       {/* Animated Background */}
       <div className="absolute inset-0">
-        {[...Array(15)].map((_, i) => (
+        {particles.map((particle, i) => (
           <div
             key={i}
             className="absolute w-1 h-1 bg-yellow-400 rounded-full animate-sparkle opacity-40"
             style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-              animationDelay: `${Math.random() * 3}s`
+              left: `${particle.left}%`,
+              top: `${particle.top}%`,
+              animationDelay: `${particle.delay}s`
             }}
           />
         ))}
