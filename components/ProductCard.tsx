@@ -33,9 +33,9 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, priority = false }) 
     setIsWishlisted(!isWishlisted)
   }
 
-  // Generate random rating for demo (in real app, this would come from API)
-  const rating = 4.2 + Math.random() * 0.7
-  const reviewCount = Math.floor(Math.random() * 500) + 50
+  // Static rating for demo (in real app, this would come from API)
+  const rating = 4.5
+  const reviewCount = 127
 
   return (
     <div className="product-card group relative p-4 h-full flex flex-col">
