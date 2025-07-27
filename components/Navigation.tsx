@@ -3,9 +3,11 @@
 import React, { useState } from 'react'
 import { Menu, X, ShoppingBag, Search, User } from 'lucide-react'
 import Link from 'next/link'
+import { useCart } from '@/contexts/CartContext'
 
 const Navigation = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const { toggleCart, itemCount } = useCart()
 
   return (
     <nav className="fixed top-0 w-full z-50 glass-effect border-b border-gold/20">
