@@ -95,7 +95,7 @@ body {
   }
 
   .card-product {
-    @apply bg-white transition-all duration-500 group;
+    @apply bg-white transition-all duration-500;
     border-radius: 2px;
   }
 
