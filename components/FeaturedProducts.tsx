@@ -3,120 +3,179 @@
 import React, { useState } from 'react'
 import ProductCard from './ProductCard'
 import { getFeaturedProducts } from '@/lib/products'
-import { Flame, Crown, Sparkles, ArrowRight, Filter } from 'lucide-react'
+import { Filter, Grid, List, SlidersHorizontal } from 'lucide-react'
 import Link from 'next/link'
 
 const FeaturedProducts = () => {
   const featuredProducts = getFeaturedProducts()
   const [activeFilter, setActiveFilter] = useState('all')
-
+  const [sortBy, setSortBy] = useState('featured')
+  const [viewMode, setViewMode] = useState('grid')
+  
   const categories = [
-    { id: 'all', label: 'ALL HEAT', icon: Flame },
-    { id: 'tshirt', label: 'TOPS', icon: Sparkles },
-    { id: 'hoodie', label: 'HOODIES', icon: Crown }
+    { id: 'all', label: 'All Products' },
+    { id: 'tshirt', label: 'T-Shirts' },
+    { id: 'hoodie', label: 'Hoodies' },
+    { id: 'limited', label: 'Limited Edition' }
   ]
 
-  const filteredProducts = activeFilter === 'all'
-    ? featuredProducts
-    : featuredProducts.filter(p => p.category === activeFilter)
+  const sortOptions = [
+    { id: 'featured', label: 'Featured' },
+    { id: 'price-low', label: 'Price: Low to High' },
+    { id: 'price-high', label: 'Price: High to Low' },
+    { id: 'newest', label: 'Newest' },
+    { id: 'rating', label: 'Customer Rating' }
+  ]
+
+  const filteredProducts = activeFilter === 'all' 
+    ? featuredProducts 
+    : featuredProducts.filter(p => 
+        activeFilter === 'limited' ? p.drop : p.category === activeFilter
+      )
+
+  const sortedProducts = [...filteredProducts].sort((a, b) => {
+    switch (sortBy) {
+      case 'price-low':
+        return a.price - b.price
+      case 'price-high':
+        return b.price - a.price
+      case 'newest':
+        return b.name.localeCompare(a.name)
+      case 'rating':
+        return Math.random() - 0.5 // Random for demo
+      default:
+        return 0
+    }
+  })
 
   return (
-    <section className="py-24 bg-gradient-to-b from-black via-gray-900 to-black relative overflow-hidden">
-      {/* Background Elements */}
-      <div className="absolute inset-0">
-        <div className="absolute top-0 left-1/4 w-96 h-96 bg-gold/5 rounded-full blur-3xl"></div>
-        <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-gold/5 rounded-full blur-3xl"></div>
-      </div>
-
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section className="bg-white py-16">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
-        <div className="text-center mb-16">
-          <div className="inline-flex items-center space-x-3 bg-gradient-to-r from-gold/20 via-gold/10 to-gold/20 border border-gold/50 rounded-full px-8 py-3 mb-8 backdrop-blur-sm">
-            <Crown size={20} className="text-gold" />
-            <span className="text-gold text-sm font-black tracking-widest">CULTURE COLLECTION</span>
-            <Crown size={20} className="text-gold" />
-          </div>
-
-          <h2 className="text-5xl md:text-7xl font-black mb-8 leading-tight">
-            <span className="block text-white">PIECES THAT</span>
-            <span className="block">
-              <span className="text-stroke">SPEAK</span>
-              <span className="text-gold ml-4">VOLUMES</span>
-            </span>
+        <div className="text-center mb-12">
+          <h2 className="text-3xl font-extrabold text-gray-900 sm:text-4xl mb-4">
+            Featured Products
           </h2>
-
-          <p className="text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed">
-            Every thread tells a story. Every piece carries the <span className="text-gold font-bold">soul of Lagos</span>
-            and the <span className="text-gold font-bold">energy of the streets</span>. This isn't just clothing - it's cultural currency.
+          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+            Discover our carefully curated collection of premium streetwear pieces
           </p>
         </div>
 
-        {/* Category Filter */}
-        <div className="flex justify-center mb-16">
-          <div className="flex items-center space-x-2 bg-black/50 border border-gold/30 rounded-full p-2 backdrop-blur-sm">
-            {categories.map((category) => {
-              const IconComponent = category.icon
-              return (
-                <button
-                  key={category.id}
-                  onClick={() => setActiveFilter(category.id)}
-                  className={`flex items-center space-x-2 px-6 py-3 rounded-full font-bold text-sm transition-all duration-300 ${
-                    activeFilter === category.id
-                      ? 'bg-gold text-black'
-                      : 'text-gold hover:bg-gold/20'
-                  }`}
+        {/* Filters and Controls */}
+        <div className="mb-8">
+          {/* Category Filters */}
+          <div className="flex flex-wrap justify-center gap-2 mb-6">
+            {categories.map((category) => (
+              <button
+                key={category.id}
+                onClick={() => setActiveFilter(category.id)}
+                className={`px-6 py-2 rounded-full text-sm font-medium transition-colors duration-200 ${
+                  activeFilter === category.id
+                    ? 'bg-gray-900 text-white'
+                    : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+                }`}
+              >
+                {category.label}
+              </button>
+            ))}
+          </div>
+
+          {/* Sort and View Controls */}
+          <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
+            <div className="flex items-center space-x-4">
+              <span className="text-sm text-gray-600">
+                {sortedProducts.length} products
+              </span>
+              
+              {/* Sort Dropdown */}
+              <div className="flex items-center space-x-2">
+                <SlidersHorizontal size={16} className="text-gray-400" />
+                <select
+                  value={sortBy}
+                  onChange={(e) => setSortBy(e.target.value)}
+                  className="text-sm border border-gray-300 rounded-md px-3 py-1 focus:outline-none focus:ring-2 focus:ring-gold focus:border-gold"
                 >
-                  <IconComponent size={16} />
-                  <span>{category.label}</span>
-                </button>
-              )
-            })}
+                  {sortOptions.map((option) => (
+                    <option key={option.id} value={option.id}>
+                      {option.label}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            </div>
+
+            {/* View Mode Toggle */}
+            <div className="flex items-center space-x-2">
+              <button
+                onClick={() => setViewMode('grid')}
+                className={`p-2 rounded ${
+                  viewMode === 'grid' ? 'bg-gray-900 text-white' : 'bg-gray-200 text-gray-600'
+                }`}
+              >
+                <Grid size={16} />
+              </button>
+              <button
+                onClick={() => setViewMode('list')}
+                className={`p-2 rounded ${
+                  viewMode === 'list' ? 'bg-gray-900 text-white' : 'bg-gray-200 text-gray-600'
+                }`}
+              >
+                <List size={16} />
+              </button>
+            </div>
           </div>
         </div>
 
         {/* Products Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 mb-16">
-          {filteredProducts.map((product, index) => (
-            <div key={product.id} className="transform hover:scale-105 transition-all duration-500">
-              <ProductCard
-                product={product}
-                priority={index < 4}
-              />
-            </div>
+        <div className={`grid gap-6 mb-12 ${
+          viewMode === 'grid' 
+            ? 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4' 
+            : 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3'
+        }`}>
+          {sortedProducts.map((product, index) => (
+            <ProductCard 
+              key={product.id} 
+              product={product} 
+              priority={index < 8}
+            />
           ))}
         </div>
 
-        {/* Call to Action */}
+        {/* Load More / View All */}
         <div className="text-center">
-          <div className="mb-8">
-            <div className="inline-block bg-gradient-to-r from-gold via-yellow-400 to-gold bg-clip-text text-transparent text-2xl font-black mb-4">
-              READY TO JOIN THE CULTURE?
+          <Link
+            href="/shop"
+            className="inline-flex items-center px-8 py-3 border border-gray-300 text-base font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 transition-colors duration-200"
+          >
+            View All Products
+          </Link>
+        </div>
+
+        {/* Features Banner */}
+        <div className="mt-16 bg-gray-50 rounded-lg p-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+            <div>
+              <div className="w-12 h-12 bg-gold rounded-full flex items-center justify-center mx-auto mb-4">
+                <span className="text-white font-bold">🚚</span>
+              </div>
+              <h3 className="font-semibold text-gray-900 mb-2">Free Shipping</h3>
+              <p className="text-gray-600 text-sm">Free delivery on orders over ₦50,000</p>
+            </div>
+            <div>
+              <div className="w-12 h-12 bg-gold rounded-full flex items-center justify-center mx-auto mb-4">
+                <span className="text-white font-bold">🔄</span>
+              </div>
+              <h3 className="font-semibold text-gray-900 mb-2">Easy Returns</h3>
+              <p className="text-gray-600 text-sm">30-day hassle-free return policy</p>
+            </div>
+            <div>
+              <div className="w-12 h-12 bg-gold rounded-full flex items-center justify-center mx-auto mb-4">
+                <span className="text-white font-bold">⭐</span>
+              </div>
+              <h3 className="font-semibold text-gray-900 mb-2">Quality Guarantee</h3>
+              <p className="text-gray-600 text-sm">Premium materials and craftsmanship</p>
             </div>
           </div>
-
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link
-              href="/shop"
-              className="group relative bg-gold text-black font-black text-lg px-10 py-4 rounded-none border-4 border-gold hover:bg-transparent hover:text-gold transition-all duration-300 overflow-hidden"
-            >
-              <span className="relative z-10 flex items-center justify-center space-x-2">
-                <span>EXPLORE ALL HEAT</span>
-                <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform duration-300" />
-              </span>
-            </Link>
-
-            <Link
-              href="/drops"
-              className="border-2 border-gold text-gold font-bold text-lg px-10 py-4 rounded-none hover:bg-gold hover:text-black transition-all duration-300 flex items-center justify-center space-x-2"
-            >
-              <Flame size={20} />
-              <span>LIMITED DROPS</span>
-            </Link>
-          </div>
-
-          <p className="text-gray-400 text-sm mt-6">
-            Free shipping on orders over ₦50,000 • Lagos same-day delivery available
-          </p>
         </div>
       </div>
     </section>
