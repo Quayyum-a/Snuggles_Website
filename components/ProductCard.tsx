@@ -4,9 +4,8 @@ import React, { useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { Product } from '@/lib/types'
-import { ShoppingBag, Star, Heart, Eye } from 'lucide-react'
+import { ShoppingBag, Heart, Eye, Star, Zap } from 'lucide-react'
 import { useCart } from '@/contexts/CartContext'
-import { getProductRating } from '@/lib/productRatings'
 
 interface ProductCardProps {
   product: Product
@@ -16,7 +15,6 @@ interface ProductCardProps {
 const ProductCard: React.FC<ProductCardProps> = ({ product, priority = false }) => {
   const { addItem } = useCart()
   const [selectedSize, setSelectedSize] = useState(product.sizes[0])
-  const [selectedColor, setSelectedColor] = useState(product.colors[0])
   const [isWishlisted, setIsWishlisted] = useState(false)
 
   const handleAddToCart = (e: React.MouseEvent) => {
@@ -24,7 +22,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, priority = false }) 
     e.stopPropagation()
     
     if (product.inStock) {
-      addItem(product, selectedSize, selectedColor)
+      addItem(product, selectedSize, product.colors[0])
     }
   }
 
@@ -34,123 +32,111 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, priority = false }) 
     setIsWishlisted(!isWishlisted)
   }
 
-  // Get static rating to prevent hydration mismatch
-  const { rating, reviewCount } = getProductRating(product.id)
+  const rating = 4.7
+  const reviewCount = 142
 
   return (
-    <div className="product-card group relative p-4 h-full flex flex-col">
-      <Link href={`/product/${product.id}`} className="flex-1">
+    <div className="card-product group relative h-full">
+      <Link href={`/product/${product.id}`}>
         {/* Product Image */}
-        <div className="relative aspect-square overflow-hidden rounded-lg bg-gray-100 mb-4">
+        <div className="relative aspect-square overflow-hidden bg-gray-50">
           <Image
             src={product.image}
             alt={product.name}
             fill
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-            className="object-cover group-hover:scale-105 transition-transform duration-300"
+            className="object-cover group-hover:scale-110 transition-transform duration-700"
             priority={priority}
           />
           
-          {/* Wishlist Button */}
+          {/* Overlay */}
+          <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+            <div className="transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
+              <button className="btn-primary mb-3">
+                <Eye className="w-4 h-4" />
+                Quick View
+              </button>
+            </div>
+          </div>
+
+          {/* Badges */}
+          <div className="absolute top-3 left-3 space-y-2">
+            {product.drop && (
+              <div className="badge badge-error flex items-center space-x-1">
+                <Zap className="w-3 h-3" />
+                <span>Hot</span>
+              </div>
+            )}
+            {product.featured && (
+              <div className="badge badge-secondary">
+                Featured
+              </div>
+            )}
+          </div>
+
+          {/* Wishlist */}
           <button
             onClick={handleWishlist}
-            className="absolute top-2 right-2 p-2 bg-white rounded-full shadow-md hover:shadow-lg transition-shadow duration-200"
+            className="absolute top-3 right-3 w-8 h-8 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 hover:bg-white"
           >
             <Heart 
-              size={16} 
-              className={`${isWishlisted ? 'text-red-500 fill-current' : 'text-gray-400'}`} 
+              className={`w-4 h-4 ${isWishlisted ? 'text-pink-500 fill-current' : 'text-gray-600'}`} 
             />
           </button>
-
-          {/* Sale Badge */}
-          {product.drop && (
-            <div className="absolute top-2 left-2 bg-red-500 text-white text-xs font-bold px-2 py-1 rounded">
-              LIMITED
-            </div>
-          )}
-
-          {/* Quick View */}
-          <div className="absolute inset-0 bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-            <button className="bg-white text-gray-900 px-4 py-2 rounded-md font-medium flex items-center space-x-2 hover:bg-gray-100">
-              <Eye size={16} />
-              <span>Quick View</span>
-            </button>
-          </div>
         </div>
 
         {/* Product Info */}
-        <div className="flex-1 flex flex-col">
-          {/* Brand & Category */}
-          <p className="text-xs text-gray-500 uppercase tracking-wide mb-1">
-            SNUGGLES • {product.category}
+        <div className="p-5">
+          {/* Category */}
+          <p className="text-xs font-semibold text-indigo-600 uppercase tracking-wider mb-2">
+            {product.category}
           </p>
           
           {/* Product Name */}
-          <h3 className="text-sm font-medium text-gray-900 mb-2 line-clamp-2 flex-1">
+          <h3 className="font-bold text-lg text-gray-900 mb-2 group-hover:text-indigo-600 transition-colors duration-300">
             {product.name}
           </h3>
           
+          {/* Description */}
+          <p className="text-gray-600 text-sm mb-3 line-clamp-2">
+            {product.description}
+          </p>
+
           {/* Rating */}
-          <div className="flex items-center mb-2">
-            <div className="star-rating">
+          <div className="flex items-center mb-3">
+            <div className="flex items-center space-x-1">
               {[...Array(5)].map((_, i) => (
                 <Star
                   key={i}
-                  size={12}
-                  className={`${
+                  className={`w-3 h-3 ${
                     i < Math.floor(rating) 
-                      ? 'text-yellow-400 fill-current' 
+                      ? 'text-amber-400 fill-current' 
                       : 'text-gray-300'
                   }`}
                 />
               ))}
             </div>
-            <span className="text-xs text-gray-600 ml-1">
-              {rating.toFixed(1)} ({reviewCount})
+            <span className="text-xs text-gray-600 ml-2">
+              {rating} ({reviewCount})
             </span>
           </div>
 
           {/* Price */}
-          <div className="mb-3">
-            <span className="price-display">${product.price}</span>
-            {product.drop && (
-              <span className="original-price ml-2">${(product.price * 1.2).toFixed(0)}</span>
-            )}
+          <div className="flex items-center justify-between mb-4">
+            <span className="text-2xl font-bold gradient-text">
+              ${product.price}
+            </span>
+            
+            {/* Stock Status */}
+            <span className={`text-xs font-medium ${product.inStock ? 'text-green-600' : 'text-red-600'}`}>
+              {product.inStock ? '✓ In Stock' : '✗ Out of Stock'}
+            </span>
           </div>
 
-          {/* Color Options */}
-          <div className="mb-3">
-            <p className="text-xs text-gray-600 mb-1">Colors:</p>
-            <div className="flex space-x-1">
-              {product.colors.slice(0, 4).map((color, index) => (
-                <button
-                  key={index}
-                  onClick={(e) => {
-                    e.preventDefault()
-                    e.stopPropagation()
-                    setSelectedColor(color)
-                  }}
-                  className={`w-4 h-4 rounded-full border-2 ${
-                    selectedColor === color ? 'border-gray-900' : 'border-gray-300'
-                  }`}
-                  style={{
-                    backgroundColor: 
-                      color.toLowerCase() === 'gold' ? '#d4a422' : 
-                      color.toLowerCase() === 'white' ? '#ffffff' : '#000000'
-                  }}
-                  title={color}
-                />
-              ))}
-              {product.colors.length > 4 && (
-                <span className="text-xs text-gray-500">+{product.colors.length - 4}</span>
-              )}
-            </div>
-          </div>
-
-          {/* Size Options */}
+          {/* Size Selection */}
           <div className="mb-4">
-            <p className="text-xs text-gray-600 mb-1">Sizes:</p>
-            <div className="flex space-x-1">
+            <p className="text-xs text-gray-600 mb-2">Size:</p>
+            <div className="flex space-x-2">
               {product.sizes.slice(0, 4).map((size) => (
                 <button
                   key={size}
@@ -159,10 +145,10 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, priority = false }) 
                     e.stopPropagation()
                     setSelectedSize(size)
                   }}
-                  className={`text-xs px-2 py-1 border rounded ${
+                  className={`w-8 h-8 text-xs font-medium border rounded-lg transition-colors duration-200 ${
                     selectedSize === size 
-                      ? 'border-gray-900 bg-gray-900 text-white' 
-                      : 'border-gray-300 text-gray-700 hover:border-gray-400'
+                      ? 'border-indigo-600 bg-indigo-600 text-white' 
+                      : 'border-gray-300 text-gray-600 hover:border-indigo-400'
                   }`}
                 >
                   {size}
@@ -170,41 +156,24 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, priority = false }) 
               ))}
             </div>
           </div>
-
-          {/* Stock Status */}
-          <div className="mb-3">
-            <span className={`text-xs ${product.inStock ? 'text-green-600' : 'text-red-600'}`}>
-              {product.inStock ? '✓ In Stock' : '✗ Out of Stock'}
-            </span>
-            {product.inStock && (
-              <span className="text-xs text-gray-500 ml-2">
-                • Fast delivery available
-              </span>
-            )}
-          </div>
         </div>
       </Link>
 
       {/* Add to Cart Button */}
-      <button
-        onClick={handleAddToCart}
-        disabled={!product.inStock}
-        className={`w-full mt-auto py-2 px-4 rounded-md font-medium text-sm transition-colors duration-200 flex items-center justify-center space-x-2 ${
-          product.inStock
-            ? 'amazon-button hover:amazon-button'
-            : 'bg-gray-200 text-gray-500 cursor-not-allowed'
-        }`}
-      >
-        <ShoppingBag size={16} />
-        <span>{product.inStock ? 'Add to Cart' : 'Out of Stock'}</span>
-      </button>
-
-      {/* Prime Shipping */}
-      {product.inStock && (
-        <p className="text-xs text-blue-600 mt-2 text-center">
-          🚚 FREE delivery in Lagos
-        </p>
-      )}
+      <div className="px-5 pb-5">
+        <button
+          onClick={handleAddToCart}
+          disabled={!product.inStock}
+          className={`w-full py-3 rounded-lg font-semibold text-sm transition-all duration-300 flex items-center justify-center space-x-2 ${
+            product.inStock
+              ? 'bg-gray-900 text-white hover:bg-indigo-600 hover:shadow-lg'
+              : 'bg-gray-200 text-gray-500 cursor-not-allowed'
+          }`}
+        >
+          <ShoppingBag className="w-4 h-4" />
+          <span>{product.inStock ? 'Add to Cart' : 'Out of Stock'}</span>
+        </button>
+      </div>
     </div>
   )
 }
