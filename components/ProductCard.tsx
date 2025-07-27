@@ -6,6 +6,7 @@ import Link from 'next/link'
 import { Product } from '@/lib/types'
 import { ShoppingBag, Star, Heart, Eye } from 'lucide-react'
 import { useCart } from '@/contexts/CartContext'
+import { getProductRating } from '@/lib/productRatings'
 
 interface ProductCardProps {
   product: Product
