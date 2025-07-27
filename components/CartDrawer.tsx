@@ -145,7 +145,7 @@ const CartDrawer = () => {
             {/* Subtotal */}
             <div className="flex items-center justify-between text-lg">
               <span className="text-gray-900">Subtotal</span>
-              <span className="font-semibold text-gray-900">₦{(total * 800).toLocaleString()}</span>
+              <span className="font-semibold text-gray-900" suppressHydrationWarning>₦{(total * 800).toLocaleString()}</span>
             </div>
             
             <div className="text-sm text-gray-500">
