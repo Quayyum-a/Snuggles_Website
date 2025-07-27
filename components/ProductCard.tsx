@@ -4,7 +4,7 @@ import React, { useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { Product } from '@/lib/types'
-import { ShoppingBag, Zap, Plus } from 'lucide-react'
+import { ShoppingBag, Zap, Plus, Sparkles } from 'lucide-react'
 import { useCart } from '@/contexts/CartContext'
 
 interface ProductCardProps {
