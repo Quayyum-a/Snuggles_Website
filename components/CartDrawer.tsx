@@ -37,7 +37,7 @@ const CartDrawer = () => {
         <div className="flex items-center justify-between p-6 border-b border-gray-200">
           <div className="flex items-center space-x-2">
             <ShoppingBag size={24} className="text-gray-900" />
-            <h2 className="text-xl font-semibold text-gray-900">
+            <h2 className="text-xl font-semibold text-gray-900" suppressHydrationWarning>
               Shopping Bag ({itemCount})
             </h2>
           </div>
