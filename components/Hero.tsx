@@ -1,233 +1,146 @@
 'use client'
 
 import React from 'react'
-import { ArrowRight, Star, Truck, Shield } from 'lucide-react'
+import { ArrowRight, Sparkles, Star } from 'lucide-react'
 import Link from 'next/link'
 import Image from 'next/image'
 
 const Hero = () => {
   return (
-    <section className="bg-gray-50">
-      {/* Main Hero */}
-      <div className="relative bg-white overflow-hidden">
-        <div className="max-w-7xl mx-auto">
-          <div className="relative z-10 pb-8 bg-white sm:pb-16 md:pb-20 lg:max-w-2xl lg:w-full lg:pb-28 xl:pb-32">
-            <svg
-              className="hidden lg:block absolute right-0 inset-y-0 h-full w-48 text-white transform translate-x-1/2"
-              fill="currentColor"
-              viewBox="0 0 100 100"
-              preserveAspectRatio="none"
-              aria-hidden="true"
-            >
-              <polygon points="50,0 100,0 50,100 0,100" />
-            </svg>
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-indigo-50 via-white to-pink-50">
+      {/* Animated Background Elements */}
+      <div className="absolute inset-0">
+        <div className="absolute top-20 left-10 w-4 h-4 bg-indigo-400 rounded-full animate-float opacity-60"></div>
+        <div className="absolute top-40 right-20 w-6 h-6 bg-pink-400 rounded-full animate-float opacity-60" style={{ animationDelay: '1s' }}></div>
+        <div className="absolute bottom-40 left-20 w-5 h-5 bg-amber-400 rounded-full animate-float opacity-60" style={{ animationDelay: '2s' }}></div>
+        <div className="absolute top-60 left-1/3 w-3 h-3 bg-purple-400 rounded-full animate-float opacity-60" style={{ animationDelay: '0.5s' }}></div>
+      </div>
 
-            <div className="relative pt-6 px-4 sm:px-6 lg:px-8">
-              <main className="mt-10 mx-auto max-w-7xl px-4 sm:mt-12 sm:px-6 md:mt-16 lg:mt-20 lg:px-8 xl:mt-28">
-                <div className="sm:text-center lg:text-left">
-                  {/* Badge */}
-                  <div className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-gold text-white mb-4">
-                    New Collection
-                  </div>
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+          
+          {/* Left Content */}
+          <div className="text-center lg:text-left space-y-8 animate-slide-up">
+            {/* Badge */}
+            <div className="inline-flex items-center space-x-2 bg-white/80 backdrop-blur-sm border border-indigo-200 rounded-full px-4 py-2 shadow-lg">
+              <Sparkles className="w-4 h-4 text-indigo-600" />
+              <span className="text-sm font-semibold text-indigo-600">New Collection Drop</span>
+            </div>
 
-                  <h1 className="text-4xl tracking-tight font-extrabold text-gray-900 sm:text-5xl md:text-6xl">
-                    <span className="block xl:inline">Your Comfort</span>{' '}
-                    <span className="block text-gold xl:inline">Has Arrived</span>
-                  </h1>
-                  
-                  <p className="mt-3 text-base text-gray-500 sm:mt-5 sm:text-lg sm:max-w-xl sm:mx-auto md:mt-5 md:text-xl lg:mx-0">
-                    Premium streetwear that blends Lagos street culture with global fashion. 
-                    Crafted for comfort, designed for impact.
-                  </p>
+            {/* Main Heading */}
+            <div className="space-y-4">
+              <h1 className="text-5xl lg:text-7xl font-black font-poppins leading-tight">
+                <span className="block text-gray-900">Express</span>
+                <span className="block gradient-text">Yourself</span>
+                <span className="block text-gray-900">Boldly</span>
+              </h1>
+              
+              <p className="text-xl text-gray-600 max-w-lg mx-auto lg:mx-0 leading-relaxed">
+                Discover unique streetwear that speaks your language. From nostalgic graphics to psychedelic art, 
+                find your perfect vibe.
+              </p>
+            </div>
 
-                  {/* CTA Buttons */}
-                  <div className="mt-5 sm:mt-8 sm:flex sm:justify-center lg:justify-start">
-                    <div className="rounded-md shadow">
-                      <Link
-                        href="/shop"
-                        className="nike-button flex items-center justify-center px-8 py-3 text-base font-medium rounded-md text-white md:py-4 md:text-lg md:px-10"
-                      >
-                        Shop Now
-                        <ArrowRight className="ml-2 h-5 w-5" />
-                      </Link>
-                    </div>
-                    <div className="mt-3 sm:mt-0 sm:ml-3">
-                      <Link
-                        href="/new"
-                        className="w-full flex items-center justify-center px-8 py-3 border border-gray-300 text-base font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 md:py-4 md:text-lg md:px-10"
-                      >
-                        New Arrivals
-                      </Link>
-                    </div>
-                  </div>
+            {/* CTA Buttons */}
+            <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+              <Link href="/shop" className="btn-primary">
+                <span>Shop Collection</span>
+                <ArrowRight className="w-4 h-4" />
+              </Link>
+              
+              <Link href="/about" className="btn-secondary">
+                <span>Our Story</span>
+              </Link>
+            </div>
 
-                  {/* Features */}
-                  <div className="mt-8 grid grid-cols-3 gap-4 text-center sm:text-left">
-                    <div className="flex items-center space-x-2">
-                      <Truck className="h-5 w-5 text-gold" />
-                      <span className="text-sm text-gray-600">Free Shipping</span>
-                    </div>
-                    <div className="flex items-center space-x-2">
-                      <Shield className="h-5 w-5 text-gold" />
-                      <span className="text-sm text-gray-600">Authentic</span>
-                    </div>
-                    <div className="flex items-center space-x-2">
-                      <Star className="h-5 w-5 text-gold" />
-                      <span className="text-sm text-gray-600">Premium Quality</span>
-                    </div>
+            {/* Social Proof */}
+            <div className="flex items-center justify-center lg:justify-start space-x-6 pt-4">
+              <div className="text-center">
+                <div className="flex items-center justify-center space-x-1">
+                  {[...Array(5)].map((_, i) => (
+                    <Star key={i} className="w-4 h-4 text-amber-400 fill-current" />
+                  ))}
+                </div>
+                <p className="text-sm text-gray-600 mt-1">500+ Reviews</p>
+              </div>
+              
+              <div className="h-8 w-px bg-gray-300"></div>
+              
+              <div className="text-center">
+                <p className="text-2xl font-bold text-gray-900">1K+</p>
+                <p className="text-sm text-gray-600">Happy Customers</p>
+              </div>
+              
+              <div className="h-8 w-px bg-gray-300"></div>
+              
+              <div className="text-center">
+                <p className="text-2xl font-bold text-gray-900">24h</p>
+                <p className="text-sm text-gray-600">Fast Shipping</p>
+              </div>
+            </div>
+          </div>
+
+          {/* Right Content - Product Showcase */}
+          <div className="relative">
+            {/* Main Product */}
+            <div className="relative z-10 transform rotate-3 hover:rotate-0 transition-transform duration-500">
+              <div className="card-product overflow-hidden shadow-2xl">
+                <Image
+                  src="https://cdn.builder.io/api/v1/image/assets%2Fe4be0ebfbe0245c78c482ccb62c8df0a%2F3ea37fd4c46e403298758b84e2afb0c0?format=webp&width=800"
+                  alt="The Kids Next Door Tee"
+                  width={400}
+                  height={400}
+                  className="w-full h-96 object-cover"
+                  priority
+                />
+                <div className="p-6 bg-white">
+                  <h3 className="font-bold text-lg text-gray-900">The Kids Next Door Tee</h3>
+                  <p className="text-gray-600">Nostalgic vibes, premium comfort</p>
+                  <div className="flex items-center justify-between mt-4">
+                    <span className="text-2xl font-bold gradient-text">$45</span>
+                    <button className="btn-primary text-sm">
+                      Add to Cart
+                    </button>
                   </div>
                 </div>
-              </main>
+              </div>
             </div>
+
+            {/* Floating Product Cards */}
+            <div className="absolute -top-4 -left-4 transform -rotate-12 opacity-90 animate-float">
+              <div className="w-32 h-32 card-product overflow-hidden shadow-lg">
+                <Image
+                  src="https://cdn.builder.io/api/v1/image/assets%2Fe4be0ebfbe0245c78c482ccb62c8df0a%2Fbe8221afd58149f88576702979408a9b?format=webp&width=800"
+                  alt="Peace of Mind Tee"
+                  width={128}
+                  height={128}
+                  className="w-full h-full object-cover"
+                />
+              </div>
+            </div>
+
+            <div className="absolute -bottom-4 -right-4 transform rotate-12 opacity-90 animate-float" style={{ animationDelay: '1s' }}>
+              <div className="w-32 h-32 card-product overflow-hidden shadow-lg">
+                <Image
+                  src="https://cdn.builder.io/api/v1/image/assets%2Fe4be0ebfbe0245c78c482ccb62c8df0a%2Fa64f82ed3645429787f2c4364e39ddf7?format=webp&width=800"
+                  alt="SNUGGLES Rainbow Hoodie"
+                  width={128}
+                  height={128}
+                  className="w-full h-full object-cover"
+                />
+              </div>
+            </div>
+
+            {/* Glow Effect */}
+            <div className="absolute inset-0 bg-gradient-to-r from-indigo-400/20 to-pink-400/20 rounded-full blur-3xl -z-10"></div>
           </div>
-        </div>
-        
-        <div className="lg:absolute lg:inset-y-0 lg:right-0 lg:w-1/2">
-          <Image
-            className="h-56 w-full object-cover sm:h-72 md:h-96 lg:w-full lg:h-full"
-            src="https://cdn.builder.io/api/v1/image/assets%2Fe4be0ebfbe0245c78c482ccb62c8df0a%2F8d63283de99d4fb592a98f736653490a?format=webp&width=800"
-            alt="SNUGGLES Street Culture"
-            width={800}
-            height={600}
-            priority
-          />
         </div>
       </div>
 
-      {/* Product Showcase */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        <div className="text-center mb-12">
-          <h2 className="text-3xl font-extrabold text-gray-900 sm:text-4xl">
-            Featured Products
-          </h2>
-          <p className="mt-4 text-lg text-gray-600">
-            Discover our most popular streetwear pieces
-          </p>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {/* Featured Product 1 */}
-          <div className="group relative">
-            <div className="aspect-w-1 aspect-h-1 w-full overflow-hidden rounded-lg bg-gray-200">
-              <Image
-                src="https://cdn.builder.io/api/v1/image/assets%2Fe4be0ebfbe0245c78c482ccb62c8df0a%2F39e25d9778c8423db7ee03df6ca707b4?format=webp&width=800"
-                alt="PANDIT Psychedelic Tee"
-                className="h-full w-full object-cover object-center group-hover:opacity-75"
-                width={400}
-                height={400}
-              />
-            </div>
-            <div className="mt-4 flex justify-between">
-              <div>
-                <h3 className="text-sm text-gray-700">
-                  <Link href="/product/snuggles-pandit-tee">
-                    <span aria-hidden="true" className="absolute inset-0" />
-                    PANDIT Psychedelic Tee
-                  </Link>
-                </h3>
-                <p className="mt-1 text-sm text-gray-500">Mind-bending street art</p>
-              </div>
-              <p className="text-sm font-medium text-gray-900">$65</p>
-            </div>
-          </div>
-
-          {/* Featured Product 2 */}
-          <div className="group relative">
-            <div className="aspect-w-1 aspect-h-1 w-full overflow-hidden rounded-lg bg-gray-200">
-              <Image
-                src="https://cdn.builder.io/api/v1/image/assets%2Fe4be0ebfbe0245c78c482ccb62c8df0a%2F6f4925ee968d401a9f2da1cf1e7dbb55?format=webp&width=800"
-                alt="Rainbow Comfort Hoodie"
-                className="h-full w-full object-cover object-center group-hover:opacity-75"
-                width={400}
-                height={400}
-              />
-            </div>
-            <div className="mt-4 flex justify-between">
-              <div>
-                <h3 className="text-sm text-gray-700">
-                  <Link href="/product/snuggles-rainbow-hoodie">
-                    <span aria-hidden="true" className="absolute inset-0" />
-                    Rainbow Comfort Hoodie
-                  </Link>
-                </h3>
-                <p className="mt-1 text-sm text-gray-500">Premium comfort</p>
-              </div>
-              <p className="text-sm font-medium text-gray-900">$95</p>
-            </div>
-          </div>
-
-          {/* Featured Product 3 */}
-          <div className="group relative">
-            <div className="aspect-w-1 aspect-h-1 w-full overflow-hidden rounded-lg bg-gray-200">
-              <Image
-                src="https://cdn.builder.io/api/v1/image/assets%2Fe4be0ebfbe0245c78c482ccb62c8df0a%2F49dab3b2da1b46b48f7c4280df20127c?format=webp&width=800"
-                alt="The Kids Next Door Tee"
-                className="h-full w-full object-cover object-center group-hover:opacity-75"
-                width={400}
-                height={400}
-              />
-            </div>
-            <div className="mt-4 flex justify-between">
-              <div>
-                <h3 className="text-sm text-gray-700">
-                  <Link href="/product/kids-next-door-tee">
-                    <span aria-hidden="true" className="absolute inset-0" />
-                    The Kids Next Door Tee
-                  </Link>
-                </h3>
-                <p className="mt-1 text-sm text-gray-500">Nostalgic vibes</p>
-              </div>
-              <p className="text-sm font-medium text-gray-900">$55</p>
-            </div>
-          </div>
-        </div>
-
-        <div className="mt-12 text-center">
-          <Link
-            href="/shop"
-            className="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-gray-900 hover:bg-gray-800"
-          >
-            View All Products
-            <ArrowRight className="ml-2 h-5 w-5" />
-          </Link>
-        </div>
-      </div>
-
-      {/* Newsletter Signup */}
-      <div className="bg-gray-900">
-        <div className="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:py-16 lg:px-8 lg:flex lg:items-center">
-          <div className="lg:w-0 lg:flex-1">
-            <h2 className="text-3xl font-extrabold tracking-tight text-white sm:text-4xl">
-              Stay updated with our latest drops
-            </h2>
-            <p className="mt-3 max-w-3xl text-lg leading-6 text-gray-300">
-              Be the first to know about new collections, exclusive releases, and special offers.
-            </p>
-          </div>
-          <div className="mt-8 lg:mt-0 lg:ml-8">
-            <form className="sm:flex">
-              <label htmlFor="email-address" className="sr-only">
-                Email address
-              </label>
-              <input
-                id="email-address"
-                name="email-address"
-                type="email"
-                autoComplete="email"
-                required
-                className="w-full px-5 py-3 border border-transparent placeholder-gray-500 focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white focus:border-white sm:max-w-xs rounded-md"
-                placeholder="Enter your email"
-              />
-              <div className="mt-3 rounded-md shadow sm:mt-0 sm:ml-3 sm:flex-shrink-0">
-                <button
-                  type="submit"
-                  className="w-full flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-white bg-gold hover:bg-gold-light focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-gold"
-                >
-                  Subscribe
-                </button>
-              </div>
-            </form>
-          </div>
+      {/* Scroll Indicator */}
+      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
+        <div className="w-6 h-10 border-2 border-gray-400 rounded-full flex justify-center">
+          <div className="w-1 h-3 bg-gray-400 rounded-full mt-2 animate-pulse"></div>
         </div>
       </div>
     </section>
