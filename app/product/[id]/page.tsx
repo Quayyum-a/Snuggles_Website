@@ -140,12 +140,12 @@ export default function ProductPage() {
 
                 {/* Price */}
                 <div className="mb-6">
-                  <span className="text-3xl font-bold text-red-600">${product.price}</span>
+                  <span className="text-3xl font-bold text-black">₦{product.price.toLocaleString()}</span>
                   {product.drop && (
-                    <span className="original-price ml-3 text-lg">${(product.price * 1.2).toFixed(0)}</span>
+                    <span className="original-price ml-3 text-lg line-through text-gray-500">₦{(product.price * 1.2).toLocaleString()}</span>
                   )}
                   <p className="text-sm text-gray-600 mt-1">
-                    FREE shipping on orders over $50 | Same-day delivery in Lagos
+                    FREE shipping on orders over ₦50,000 | Same-day delivery in Lagos
                   </p>
                 </div>
               </div>
