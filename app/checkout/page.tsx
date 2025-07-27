@@ -42,18 +42,46 @@ export default function CheckoutPage() {
     setIsLoading(true)
 
     try {
-      // Simulate payment processing
-      await new Promise(resolve => setTimeout(resolve, 2000))
-      
-      // In production, this would integrate with Paystack or other payment processor
-      console.log('Order submitted:', { formData, items, total })
-      
-      // Clear cart and redirect to success page
-      clearCart()
-      router.push('/order-confirmation')
+      // Initialize Paystack payment
+      const response = await fetch('/api/paystack/initialize', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email: formData.email,
+          amount: finalTotal,
+          currency: 'NGN',
+          metadata: {
+            customer_name: `${formData.firstName} ${formData.lastName}`,
+            phone: formData.phone,
+            address: formData.address,
+            city: formData.city,
+            state: formData.state,
+            zipCode: formData.zipCode,
+            payment_method: formData.paymentMethod,
+            items: JSON.stringify(items.map(item => ({
+              name: item.product.name,
+              size: item.size,
+              color: item.color,
+              quantity: item.quantity,
+              price: item.product.price
+            })))
+          }
+        }),
+      })
+
+      const data = await response.json()
+
+      if (data.success) {
+        // Redirect to Paystack payment page
+        window.location.href = data.authorization_url
+      } else {
+        throw new Error(data.error || 'Payment initialization failed')
+      }
     } catch (error) {
       console.error('Checkout error:', error)
-      alert('Payment failed. Please try again.')
+      alert(`Payment failed: ${error instanceof Error ? error.message : 'Please try again.'}`)
     } finally {
       setIsLoading(false)
     }
