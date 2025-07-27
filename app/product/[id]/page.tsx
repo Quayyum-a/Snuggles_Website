@@ -23,9 +23,8 @@ export default function ProductPage() {
   const [activeImageIndex, setActiveImageIndex] = useState(0)
   const [isWishlisted, setIsWishlisted] = useState(false)
 
-  // Static mock data for demo
-  const rating = 4.3
-  const reviewCount = 89
+  // Get static rating to prevent hydration mismatch
+  const { rating, reviewCount } = getProductRating(productId)
   const relatedProducts = products.filter(p => p.id !== productId).slice(0, 4)
 
   if (!product) {
