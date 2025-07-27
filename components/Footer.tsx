@@ -81,11 +81,11 @@ const Footer = () => {
           {/* Brand Column */}
           <div className="lg:col-span-2 space-y-6">
             <Image
-              src="https://cdn.builder.io/api/v1/image/assets%2Fe4be0ebfbe0245c78c482ccb62c8df0a%2Fc4b7e7fb1ec948dd893e5b11fb6a7c0a?format=webp&width=200"
-              alt="SNUGGLES"
+              src="https://cdn.builder.io/api/v1/image/assets%2Fe4be0ebfbe0245c78c482ccb62c8df0a%2F305ba234b92148049f51344426bbddcb?format=webp&width=800"
+              alt="SNUGGLES - Your Comfort Has Arrived"
               width={160}
-              height={55}
-              className="h-12 w-auto"
+              height={160}
+              className="h-16 w-auto"
             />
             
             <p className="text-gray-400 max-w-md leading-relaxed">
