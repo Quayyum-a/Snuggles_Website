@@ -1,23 +1,35 @@
 'use client'
 
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { Instagram, Twitter, Youtube, Mail, MapPin, Phone, Sparkles, Crown, Zap } from 'lucide-react'
 
 const Footer = () => {
+  const [particles, setParticles] = useState<Array<{left: number, top: number, delay: number}>>([]);
+
+  useEffect(() => {
+    // Generate particles only on client side to avoid hydration mismatch
+    const generatedParticles = Array.from({ length: 30 }, () => ({
+      left: Math.random() * 100,
+      top: Math.random() * 100,
+      delay: Math.random() * 3
+    }));
+    setParticles(generatedParticles);
+  }, []);
+
   return (
     <footer className="bg-gradient-to-b from-black via-gray-900 to-black text-white relative overflow-hidden">
       {/* Sparkling Background */}
       <div className="absolute inset-0">
-        {[...Array(30)].map((_, i) => (
+        {particles.map((particle, i) => (
           <div
             key={i}
             className="absolute w-1 h-1 bg-yellow-400 rounded-full animate-sparkle opacity-30"
             style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-              animationDelay: `${Math.random() * 3}s`
+              left: `${particle.left}%`,
+              top: `${particle.top}%`,
+              animationDelay: `${particle.delay}s`
             }}
           />
         ))}
