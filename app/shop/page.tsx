@@ -61,7 +61,7 @@ export default function ShopPage() {
       case 'newest':
         return b.name.localeCompare(a.name)
       case 'rating':
-        return Math.random() - 0.5
+        return a.name.localeCompare(b.name)
       default:
         return 0
     }
