@@ -209,14 +209,15 @@ export default function ShopPage() {
                     <input
                       type="range"
                       min="0"
-                      max="200"
+                      max="50000"
+                      step="1000"
                       value={priceRange[1]}
                       onChange={(e) => setPriceRange([priceRange[0], parseInt(e.target.value)])}
-                      className="w-full"
+                      className="w-full accent-gold"
                     />
                     <div className="flex justify-between text-sm text-gray-600">
-                      <span>${priceRange[0]}</span>
-                      <span>${priceRange[1]}</span>
+                      <span>₦{priceRange[0].toLocaleString()}</span>
+                      <span>₦{priceRange[1].toLocaleString()}</span>
                     </div>
                   </div>
                 </div>
