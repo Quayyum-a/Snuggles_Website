@@ -41,11 +41,47 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, priority = false }) 
             />
             
             {/* Overlay on Hover */}
-            <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-              <div className="text-center">
-                <ShoppingBag size={32} className="text-gold mx-auto mb-2" />
-                <p className="text-white font-medium">Quick Add</p>
-              </div>
+            <div className="absolute inset-0 bg-black/80 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col items-center justify-center p-4">
+              {product.inStock ? (
+                <div className="text-center">
+                  {/* Size Selection */}
+                  <div className="mb-3">
+                    <p className="text-white text-xs mb-2">Size:</p>
+                    <div className="flex justify-center space-x-1">
+                      {product.sizes.slice(0, 4).map((size) => (
+                        <button
+                          key={size}
+                          onClick={(e) => {
+                            e.preventDefault()
+                            e.stopPropagation()
+                            setSelectedSize(size)
+                          }}
+                          className={`text-xs px-2 py-1 border rounded transition-colors duration-300 ${
+                            selectedSize === size
+                              ? 'border-gold bg-gold text-black'
+                              : 'border-gold/30 text-gold hover:border-gold'
+                          }`}
+                        >
+                          {size}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Quick Add Button */}
+                  <button
+                    onClick={handleAddToCart}
+                    className="bg-gold text-black font-semibold px-4 py-2 rounded hover:bg-gold-light transition-colors duration-300 flex items-center space-x-2"
+                  >
+                    <Plus size={16} />
+                    <span>Add to Cart</span>
+                  </button>
+                </div>
+              ) : (
+                <div className="text-center">
+                  <p className="text-red-400 font-medium">Sold Out</p>
+                </div>
+              )}
             </div>
 
             {/* Drop Badge */}
