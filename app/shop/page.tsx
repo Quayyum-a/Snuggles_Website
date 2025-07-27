@@ -79,7 +79,7 @@ export default function ShopPage() {
     setSelectedCategories([])
     setSelectedSizes([])
     setSelectedColors([])
-    setPriceRange([0, 200])
+    setPriceRange([0, 50000])
   }
 
   const activeFiltersCount = selectedCategories.length + selectedSizes.length + selectedColors.length
