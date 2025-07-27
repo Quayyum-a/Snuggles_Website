@@ -22,9 +22,9 @@ export default function ProductPage() {
   const [activeImageIndex, setActiveImageIndex] = useState(0)
   const [isWishlisted, setIsWishlisted] = useState(false)
 
-  // Generate mock data for demo
-  const rating = 4.2 + Math.random() * 0.7
-  const reviewCount = Math.floor(Math.random() * 500) + 50
+  // Static mock data for demo
+  const rating = 4.3
+  const reviewCount = 89
   const relatedProducts = products.filter(p => p.id !== productId).slice(0, 4)
 
   if (!product) {
