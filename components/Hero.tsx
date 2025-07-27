@@ -7,6 +7,7 @@ import Image from 'next/image'
 
 const Hero = () => {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
+  const [particles, setParticles] = useState<Array<{left: number, top: number, delay: number, duration: number}>>([])
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
@@ -14,6 +15,17 @@ const Hero = () => {
     }
     window.addEventListener('mousemove', handleMouseMove)
     return () => window.removeEventListener('mousemove', handleMouseMove)
+  }, [])
+
+  useEffect(() => {
+    // Generate particles only on client side to avoid hydration mismatch
+    const generatedParticles = Array.from({ length: 20 }, () => ({
+      left: Math.random() * 100,
+      top: Math.random() * 100,
+      delay: Math.random() * 3,
+      duration: 3 + Math.random() * 4
+    }))
+    setParticles(generatedParticles)
   }, [])
 
   return (
