@@ -7,6 +7,7 @@ import { ArrowLeft, ShoppingBag, Heart, Share2, Star, Truck, Shield, RotateCcw, 
 import Link from 'next/link'
 import { getProductById, products } from '@/lib/products'
 import { useCart } from '@/contexts/CartContext'
+import { getProductRating } from '@/lib/productRatings'
 import Navigation from '@/components/Navigation'
 import Footer from '@/components/Footer'
 
