@@ -45,11 +45,16 @@ const Navigation = () => {
             <button className="p-2 text-white hover:text-gold transition-colors duration-300">
               <User size={20} />
             </button>
-            <button className="p-2 text-white hover:text-gold transition-colors duration-300 relative">
+            <button
+              onClick={toggleCart}
+              className="p-2 text-white hover:text-gold transition-colors duration-300 relative"
+            >
               <ShoppingBag size={20} />
-              <span className="absolute -top-1 -right-1 bg-gold text-black text-xs rounded-full w-5 h-5 flex items-center justify-center">
-                0
-              </span>
+              {itemCount > 0 && (
+                <span className="absolute -top-1 -right-1 bg-gold text-black text-xs rounded-full w-5 h-5 flex items-center justify-center font-bold">
+                  {itemCount}
+                </span>
+              )}
             </button>
 
             {/* Mobile Menu Button */}
