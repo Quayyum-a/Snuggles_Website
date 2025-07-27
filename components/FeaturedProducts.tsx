@@ -1,150 +1,78 @@
 'use client'
 
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import ProductCard from './ProductCard'
 import { getFeaturedProducts } from '@/lib/products'
-import { ArrowRight, Sparkles, Crown, Flame, Zap, Star } from 'lucide-react'
+import { ArrowRight } from 'lucide-react'
 import Link from 'next/link'
 
 const FeaturedProducts = () => {
-  const featuredProducts = getFeaturedProducts();
-  const [particles, setParticles] = useState<Array<{left: number, top: number, delay: number}>>([]);
-
-  useEffect(() => {
-    // Generate particles only on client side to avoid hydration mismatch
-    const generatedParticles = Array.from({ length: 15 }, () => ({
-      left: Math.random() * 100,
-      top: Math.random() * 100,
-      delay: Math.random() * 3
-    }));
-    setParticles(generatedParticles);
-  }, []);
+  const featuredProducts = getFeaturedProducts()
 
   return (
-    <section className="py-24 bg-gradient-to-b from-black via-gray-900 to-black relative overflow-hidden">
-      {/* Animated Background */}
-      <div className="absolute inset-0">
-        {particles.map((particle, i) => (
-          <div
-            key={i}
-            className="absolute w-1 h-1 bg-yellow-400 rounded-full animate-sparkle opacity-40"
-            style={{
-              left: `${particle.left}%`,
-              top: `${particle.top}%`,
-              animationDelay: `${particle.delay}s`
-            }}
-          />
-        ))}
-      </div>
-
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Explosive Section Header */}
-        <div className="text-center mb-20 sparkle-container">
-          <div className="inline-flex items-center space-x-4 bg-gradient-to-r from-yellow-600 to-orange-600 text-black rounded-full px-8 py-4 mb-8 shadow-2xl animate-pulse-gold magnetic">
-            <Crown className="w-6 h-6 animate-sparkle" />
-            <span className="text-sm font-black uppercase tracking-widest">FEATURED COLLECTION</span>
-            <Flame className="w-6 h-6 animate-sparkle" />
+    <section className="section-padding bg-white">
+      <div className="max-w-7xl mx-auto container-padding">
+        {/* Clean Section Header */}
+        <div className="mb-16">
+          <div className="flex items-center justify-between">
+            <div>
+              <h2 className="text-4xl lg:text-6xl font-black text-black mb-4 leading-tight">
+                FEATURED
+              </h2>
+              <p className="text-lg text-gray-600 max-w-2xl">
+                Curated pieces that define the streets. 
+                Each item tells a story of culture and authenticity.
+              </p>
+            </div>
+            
+            <Link 
+              href="/shop" 
+              className="hidden lg:flex items-center gap-2 text-black hover:text-gray-600 font-medium uppercase text-sm tracking-wider transition-colors group"
+            >
+              VIEW ALL
+              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+            </Link>
           </div>
-          
-          <h2 className="text-5xl lg:text-7xl font-black font-playfair mb-8 leading-none">
-            <span className="block text-white animate-slide-up">PIECES THAT</span>
-            <span className="block gradient-text text-glow animate-slide-up" style={{ animationDelay: '0.2s' }}>COMMAND</span>
-            <span className="block text-white animate-slide-up" style={{ animationDelay: '0.4s' }}>ATTENTION</span>
-          </h2>
-          
-          <p className="text-xl lg:text-2xl text-gray-300 max-w-3xl mx-auto leading-relaxed animate-slide-up" style={{ animationDelay: '0.6s' }}>
-            Curated streetwear that makes <span className="gradient-text font-bold">impossible to ignore</span>. 
-            Each piece tells a story of <span className="gradient-text font-bold">bold expression</span> and 
-            <span className="gradient-text font-bold"> unapologetic style</span>.
-          </p>
         </div>
 
-        {/* Magnetic Products Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 mb-20">
+        {/* Products Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
           {featuredProducts.map((product, index) => (
-            <div 
-              key={product.id} 
-              className="animate-slide-up" 
-              style={{ animationDelay: `${index * 150}ms` }}
-            >
-              <ProductCard 
-                product={product} 
-                priority={index < 4}
-              />
+            <div key={product.id} className="animate-fade-in" style={{ animationDelay: `${index * 100}ms` }}>
+              <ProductCard product={product} priority={index < 4} />
             </div>
           ))}
         </div>
 
-        {/* Electric CTA Section */}
-        <div className="text-center mb-20">
-          <div className="card inline-block p-12 magnetic hover-magnetic sparkle-container animate-pulse-gold">
-            <div className="text-center space-y-6">
-              <div className="relative">
-                <Sparkles className="w-16 h-16 text-yellow-400 mx-auto animate-sparkle" />
-                <Zap className="absolute top-0 right-2 w-6 h-6 text-yellow-400 animate-sparkle" style={{ animationDelay: '0.5s' }} />
-              </div>
-              
-              <h3 className="text-3xl lg:text-4xl font-black text-white font-playfair">
-                Ready to <span className="gradient-text">Turn Heads?</span>
-              </h3>
-              
-              <p className="text-gray-400 max-w-md mx-auto text-lg">
-                Explore our complete collection of <span className="text-yellow-400 font-bold">jaw-dropping streetwear</span> pieces
-              </p>
-              
-              <Link href="/shop" className="btn-primary inline-flex magnetic text-lg px-8 py-4">
-                <span>EXPLORE ALL HEAT</span>
-                <ArrowRight className="w-5 h-5" />
-              </Link>
-            </div>
-          </div>
+        {/* Mobile View All Link */}
+        <div className="lg:hidden text-center">
+          <Link 
+            href="/shop" 
+            className="btn-primary inline-flex"
+          >
+            VIEW ALL PRODUCTS
+            <ArrowRight className="w-4 h-4" />
+          </Link>
         </div>
 
-        {/* Hypnotic Features Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          <div className="text-center group magnetic hover-magnetic">
-            <div className="w-20 h-20 bg-gradient-to-br from-yellow-600 to-orange-600 rounded-full flex items-center justify-center mx-auto mb-6 animate-pulse-gold group-hover:scale-110 transition-transform duration-500">
-              <span className="text-3xl animate-sparkle">🚚</span>
-            </div>
-            <h3 className="font-black text-xl text-white mb-3 group-hover:text-yellow-400 transition-colors duration-300">EXPRESS DELIVERY</h3>
-            <p className="text-gray-400 group-hover:text-gray-300 transition-colors duration-300">
-              Lightning-fast delivery across Nigeria. Lagos same-day delivery available.
-            </p>
+        {/* Simple Features */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 pt-16 border-t border-gray-200">
+          <div className="text-center">
+            <div className="text-4xl mb-4">🚚</div>
+            <h3 className="font-black text-lg text-black mb-2 uppercase tracking-wider">Fast Delivery</h3>
+            <p className="text-gray-600">Express shipping across Nigeria. Same-day delivery in Lagos.</p>
           </div>
           
-          <div className="text-center group magnetic hover-magnetic">
-            <div className="w-20 h-20 bg-gradient-to-br from-yellow-600 to-orange-600 rounded-full flex items-center justify-center mx-auto mb-6 animate-pulse-gold group-hover:scale-110 transition-transform duration-500">
-              <span className="text-3xl animate-sparkle">⭐</span>
-            </div>
-            <h3 className="font-black text-xl text-white mb-3 group-hover:text-yellow-400 transition-colors duration-300">PREMIUM QUALITY</h3>
-            <p className="text-gray-400 group-hover:text-gray-300 transition-colors duration-300">
-              Only the finest materials and craftsmanship. Each piece built to last and impress.
-            </p>
+          <div className="text-center">
+            <div className="text-4xl mb-4">✨</div>
+            <h3 className="font-black text-lg text-black mb-2 uppercase tracking-wider">Premium Quality</h3>
+            <p className="text-gray-600">Carefully selected materials. Built to last and make a statement.</p>
           </div>
           
-          <div className="text-center group magnetic hover-magnetic">
-            <div className="w-20 h-20 bg-gradient-to-br from-yellow-600 to-orange-600 rounded-full flex items-center justify-center mx-auto mb-6 animate-pulse-gold group-hover:scale-110 transition-transform duration-500">
-              <span className="text-3xl animate-sparkle">🔄</span>
-            </div>
-            <h3 className="font-black text-xl text-white mb-3 group-hover:text-yellow-400 transition-colors duration-300">EASY RETURNS</h3>
-            <p className="text-gray-400 group-hover:text-gray-300 transition-colors duration-300">
-              30-day hassle-free returns. Not satisfied? We'll make it right, guaranteed.
-            </p>
-          </div>
-        </div>
-
-        {/* Testimonial Burst */}
-        <div className="mt-20 text-center">
-          <div className="inline-block p-8 bg-gradient-to-r from-gray-900 to-black border border-yellow-400 magnetic hover-magnetic animate-pulse-gold">
-            <div className="flex justify-center mb-4">
-              {[...Array(5)].map((_, i) => (
-                <Star key={i} className="w-6 h-6 text-yellow-400 fill-current animate-sparkle" style={{ animationDelay: `${i * 0.1}s` }} />
-              ))}
-            </div>
-            <blockquote className="text-xl font-playfair text-white mb-4 italic">
-              "SNUGGLES pieces don't just make me look good, they make me <span className="gradient-text font-bold">feel unstoppable</span>!"
-            </blockquote>
-            <cite className="text-yellow-400 font-bold">- Kemi A., Lagos</cite>
+          <div className="text-center">
+            <div className="text-4xl mb-4">🔄</div>
+            <h3 className="font-black text-lg text-black mb-2 uppercase tracking-wider">Easy Returns</h3>
+            <p className="text-gray-600">30-day hassle-free returns. Your satisfaction is our priority.</p>
           </div>
         </div>
       </div>
