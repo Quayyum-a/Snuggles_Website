@@ -2,227 +2,213 @@
 
 import React from 'react'
 import Link from 'next/link'
-import Image from 'next/image'
-import { Instagram, Twitter, Youtube, Mail, Phone, MapPin } from 'lucide-react'
+import { Instagram, Twitter, Youtube, Mail, MapPin, Phone } from 'lucide-react'
 
 const Footer = () => {
   return (
     <footer className="bg-gray-900 text-white">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Newsletter Section */}
-        <div className="border-b border-gray-700 pb-12 mb-12">
-          <div className="max-w-md mx-auto text-center">
-            <h3 className="text-2xl font-bold mb-4">Stay in the loop</h3>
-            <p className="text-gray-300 mb-6">
-              Be the first to know about new collections and exclusive offers.
+        <div className="py-16 border-b border-gray-800">
+          <div className="text-center space-y-6">
+            <h3 className="text-3xl font-bold font-poppins">Stay in the Loop</h3>
+            <p className="text-gray-400 text-lg max-w-md mx-auto">
+              Get the latest drops, exclusive offers, and style inspiration delivered to your inbox.
             </p>
-            <form className="flex">
+            <form className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
               <input
                 type="email"
                 placeholder="Enter your email"
-                className="flex-1 px-4 py-3 bg-gray-800 border border-gray-600 rounded-l-md focus:outline-none focus:ring-2 focus:ring-gold focus:border-gold text-white placeholder-gray-400"
+                className="flex-1 form-input bg-gray-800 border-gray-700 text-white placeholder-gray-400"
               />
-              <button
-                type="submit"
-                className="amazon-button rounded-l-none"
-              >
+              <button type="submit" className="btn-primary">
                 Subscribe
               </button>
             </form>
+            <p className="text-xs text-gray-500">
+              By subscribing, you agree to our Privacy Policy and Terms of Service.
+            </p>
           </div>
         </div>
 
         {/* Main Footer Content */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 mb-12">
+        <div className="py-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {/* Brand Section */}
-          <div className="lg:col-span-2">
-            <div className="flex items-center space-x-3 mb-6">
-              <div className="relative w-12 h-12">
-                <Image
-                  src="https://cdn.builder.io/api/v1/image/assets%2Fe4be0ebfbe0245c78c482ccb62c8df0a%2F75e7da6b57174e41803145b7fabee2d1?format=webp&width=800"
-                  alt="SNUGGLES Logo"
-                  fill
-                  className="object-contain brightness-0 invert"
-                />
+          <div className="lg:col-span-1">
+            <div className="flex items-center space-x-2 mb-6">
+              <div className="w-8 h-8 bg-gradient-to-br from-indigo-500 to-pink-500 rounded-lg flex items-center justify-center font-black text-white">
+                S
               </div>
-              <span className="text-2xl font-bold">SNUGGLES</span>
+              <span className="text-xl font-bold font-poppins">SNUGGLES</span>
             </div>
-            <p className="text-gray-300 text-lg mb-6 max-w-md">
-              Premium streetwear from Lagos to the world. Your comfort has arrived.
+            <p className="text-gray-400 mb-6 leading-relaxed">
+              Express yourself boldly with our unique collection of streetwear. 
+              From nostalgic graphics to psychedelic art, find your perfect vibe.
             </p>
             
             {/* Contact Info */}
-            <div className="space-y-3 mb-6">
-              <div className="flex items-center space-x-3">
-                <MapPin size={18} className="text-gold" />
-                <span className="text-gray-300">Victoria Island, Lagos, Nigeria</span>
+            <div className="space-y-3">
+              <div className="flex items-center space-x-3 text-gray-400">
+                <MapPin size={16} className="text-indigo-400" />
+                <span className="text-sm">Lagos, Nigeria</span>
               </div>
-              <div className="flex items-center space-x-3">
-                <Phone size={18} className="text-gold" />
-                <span className="text-gray-300">+234 (0) 123 456 7890</span>
+              <div className="flex items-center space-x-3 text-gray-400">
+                <Phone size={16} className="text-indigo-400" />
+                <span className="text-sm">+234 (0) 123 456 7890</span>
               </div>
-              <div className="flex items-center space-x-3">
-                <Mail size={18} className="text-gold" />
-                <span className="text-gray-300">hello@snuggles.com</span>
+              <div className="flex items-center space-x-3 text-gray-400">
+                <Mail size={16} className="text-indigo-400" />
+                <span className="text-sm">hello@snuggles.com</span>
               </div>
-            </div>
-
-            {/* Social Links */}
-            <div className="flex space-x-4">
-              <a 
-                href="https://instagram.com/snuggles" 
-                className="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center text-gray-400 hover:text-white hover:bg-gray-700 transition-colors duration-200"
-              >
-                <Instagram size={18} />
-              </a>
-              <a 
-                href="https://twitter.com/snuggles" 
-                className="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center text-gray-400 hover:text-white hover:bg-gray-700 transition-colors duration-200"
-              >
-                <Twitter size={18} />
-              </a>
-              <a 
-                href="https://youtube.com/snuggles" 
-                className="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center text-gray-400 hover:text-white hover:bg-gray-700 transition-colors duration-200"
-              >
-                <Youtube size={18} />
-              </a>
             </div>
           </div>
 
           {/* Shop Links */}
           <div>
-            <h3 className="text-lg font-semibold mb-4">Shop</h3>
+            <h4 className="font-bold text-lg mb-6">Shop</h4>
             <ul className="space-y-3">
               <li>
-                <Link href="/shop" className="text-gray-300 hover:text-white transition-colors duration-200">
+                <Link href="/shop" className="text-gray-400 hover:text-white transition-colors duration-200">
                   All Products
                 </Link>
               </li>
               <li>
-                <Link href="/shop?category=tshirt" className="text-gray-300 hover:text-white transition-colors duration-200">
+                <Link href="/tshirts" className="text-gray-400 hover:text-white transition-colors duration-200">
                   T-Shirts
                 </Link>
               </li>
               <li>
-                <Link href="/shop?category=hoodie" className="text-gray-300 hover:text-white transition-colors duration-200">
+                <Link href="/hoodies" className="text-gray-400 hover:text-white transition-colors duration-200">
                   Hoodies
                 </Link>
               </li>
               <li>
-                <Link href="/new" className="text-gray-300 hover:text-white transition-colors duration-200">
-                  New Arrivals
+                <Link href="/collections" className="text-gray-400 hover:text-white transition-colors duration-200">
+                  Collections
                 </Link>
               </li>
               <li>
-                <Link href="/sale" className="text-gray-300 hover:text-white transition-colors duration-200">
+                <Link href="/sale" className="text-gray-400 hover:text-white transition-colors duration-200">
                   Sale
                 </Link>
               </li>
             </ul>
           </div>
 
-          {/* Customer Service */}
+          {/* Support Links */}
           <div>
-            <h3 className="text-lg font-semibold mb-4">Customer Service</h3>
+            <h4 className="font-bold text-lg mb-6">Support</h4>
             <ul className="space-y-3">
               <li>
-                <Link href="/contact" className="text-gray-300 hover:text-white transition-colors duration-200">
+                <Link href="/contact" className="text-gray-400 hover:text-white transition-colors duration-200">
                   Contact Us
                 </Link>
               </li>
               <li>
-                <Link href="/shipping" className="text-gray-300 hover:text-white transition-colors duration-200">
+                <Link href="/shipping" className="text-gray-400 hover:text-white transition-colors duration-200">
                   Shipping Info
                 </Link>
               </li>
               <li>
-                <Link href="/returns" className="text-gray-300 hover:text-white transition-colors duration-200">
+                <Link href="/returns" className="text-gray-400 hover:text-white transition-colors duration-200">
                   Returns & Exchanges
                 </Link>
               </li>
               <li>
-                <Link href="/size-guide" className="text-gray-300 hover:text-white transition-colors duration-200">
+                <Link href="/size-guide" className="text-gray-400 hover:text-white transition-colors duration-200">
                   Size Guide
                 </Link>
               </li>
               <li>
-                <Link href="/faq" className="text-gray-300 hover:text-white transition-colors duration-200">
+                <Link href="/faq" className="text-gray-400 hover:text-white transition-colors duration-200">
                   FAQ
                 </Link>
               </li>
             </ul>
           </div>
 
-          {/* Company */}
+          {/* Company Links */}
           <div>
-            <h3 className="text-lg font-semibold mb-4">Company</h3>
+            <h4 className="font-bold text-lg mb-6">Company</h4>
             <ul className="space-y-3">
               <li>
-                <Link href="/about" className="text-gray-300 hover:text-white transition-colors duration-200">
+                <Link href="/about" className="text-gray-400 hover:text-white transition-colors duration-200">
                   About Us
                 </Link>
               </li>
               <li>
-                <Link href="/careers" className="text-gray-300 hover:text-white transition-colors duration-200">
+                <Link href="/careers" className="text-gray-400 hover:text-white transition-colors duration-200">
                   Careers
                 </Link>
               </li>
               <li>
-                <Link href="/press" className="text-gray-300 hover:text-white transition-colors duration-200">
+                <Link href="/press" className="text-gray-400 hover:text-white transition-colors duration-200">
                   Press
                 </Link>
               </li>
               <li>
-                <Link href="/sustainability" className="text-gray-300 hover:text-white transition-colors duration-200">
+                <Link href="/sustainability" className="text-gray-400 hover:text-white transition-colors duration-200">
                   Sustainability
                 </Link>
               </li>
               <li>
-                <Link href="/investors" className="text-gray-300 hover:text-white transition-colors duration-200">
-                  Investors
+                <Link href="/blog" className="text-gray-400 hover:text-white transition-colors duration-200">
+                  Blog
                 </Link>
               </li>
             </ul>
           </div>
         </div>
 
-        {/* Payment Methods */}
-        <div className="border-t border-gray-700 pt-8 mb-8">
-          <div className="flex flex-col md:flex-row justify-between items-center">
-            <div className="mb-4 md:mb-0">
-              <h4 className="text-sm font-medium text-gray-400 mb-2">We accept</h4>
-              <div className="flex space-x-4">
-                <div className="bg-white text-gray-900 px-3 py-1 rounded text-sm font-medium">Paystack</div>
-                <div className="bg-white text-gray-900 px-3 py-1 rounded text-sm font-medium">Stripe</div>
-                <div className="bg-white text-gray-900 px-3 py-1 rounded text-sm font-medium">Bank Transfer</div>
-              </div>
+        {/* Social Links */}
+        <div className="py-8 border-t border-gray-800">
+          <div className="flex flex-col md:flex-row items-center justify-between">
+            <div className="flex space-x-4 mb-4 md:mb-0">
+              <a 
+                href="https://instagram.com/snuggles" 
+                className="w-10 h-10 bg-gray-800 hover:bg-gradient-to-br hover:from-pink-500 hover:to-orange-500 rounded-full flex items-center justify-center transition-all duration-300"
+              >
+                <Instagram size={18} />
+              </a>
+              <a 
+                href="https://twitter.com/snuggles" 
+                className="w-10 h-10 bg-gray-800 hover:bg-blue-500 rounded-full flex items-center justify-center transition-all duration-300"
+              >
+                <Twitter size={18} />
+              </a>
+              <a 
+                href="https://youtube.com/snuggles" 
+                className="w-10 h-10 bg-gray-800 hover:bg-red-500 rounded-full flex items-center justify-center transition-all duration-300"
+              >
+                <Youtube size={18} />
+              </a>
             </div>
             
             <div className="text-center md:text-right">
-              <h4 className="text-sm font-medium text-gray-400 mb-2">Secure Shopping</h4>
+              <p className="text-gray-400 text-sm mb-2">We accept</p>
               <div className="flex space-x-2">
-                <div className="bg-green-600 text-white px-2 py-1 rounded text-xs">SSL</div>
-                <div className="bg-blue-600 text-white px-2 py-1 rounded text-xs">256-bit</div>
+                <div className="bg-white text-gray-900 px-2 py-1 rounded text-xs font-medium">Visa</div>
+                <div className="bg-white text-gray-900 px-2 py-1 rounded text-xs font-medium">Mastercard</div>
+                <div className="bg-white text-gray-900 px-2 py-1 rounded text-xs font-medium">PayPal</div>
               </div>
             </div>
           </div>
         </div>
 
         {/* Bottom Section */}
-        <div className="border-t border-gray-700 pt-8">
-          <div className="flex flex-col md:flex-row items-center justify-between">
-            <div className="text-gray-400 text-sm mb-4 md:mb-0">
-              © 2024 SNUGGLES. All rights reserved. Made in Lagos, Nigeria.
+        <div className="py-6 border-t border-gray-800">
+          <div className="flex flex-col md:flex-row items-center justify-between text-sm text-gray-400">
+            <div className="mb-4 md:mb-0">
+              © 2024 SNUGGLES. All rights reserved. Made with ❤️ in Lagos.
             </div>
-            <div className="flex space-x-6 text-sm">
-              <Link href="/privacy" className="text-gray-400 hover:text-white transition-colors duration-200">
+            <div className="flex space-x-6">
+              <Link href="/privacy" className="hover:text-white transition-colors duration-200">
                 Privacy Policy
               </Link>
-              <Link href="/terms" className="text-gray-400 hover:text-white transition-colors duration-200">
+              <Link href="/terms" className="hover:text-white transition-colors duration-200">
                 Terms of Service
               </Link>
-              <Link href="/cookies" className="text-gray-400 hover:text-white transition-colors duration-200">
+              <Link href="/cookies" className="hover:text-white transition-colors duration-200">
                 Cookie Policy
               </Link>
             </div>
