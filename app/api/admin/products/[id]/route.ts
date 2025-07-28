@@ -1,12 +1,17 @@
 import { NextRequest } from 'next/server'
-import { requireAdmin } from '@/lib/auth'
+import { getAuthUser } from '@/lib/auth'
 import { db } from '@/lib/db'
 
-export const GET = requireAdmin(async (
+export async function GET(
   request: NextRequest,
-  user,
   { params }: { params: { id: string } }
-) => {
+) {
+  const user = await getAuthUser(request)
+  
+  if (!user || user.role !== 'ADMIN') {
+    return Response.json({ error: 'Admin access required' }, { status: 403 })
+  }
+
   try {
     const product = await db.product.findUnique({
       where: { id: params.id },
@@ -48,13 +53,18 @@ export const GET = requireAdmin(async (
       { status: 500 }
     )
   }
-})
+}
 
-export const PUT = requireAdmin(async (
+export async function PUT(
   request: NextRequest,
-  user,
   { params }: { params: { id: string } }
-) => {
+) {
+  const user = await getAuthUser(request)
+  
+  if (!user || user.role !== 'ADMIN') {
+    return Response.json({ error: 'Admin access required' }, { status: 403 })
+  }
+
   try {
     const data = await request.json()
 
@@ -88,13 +98,18 @@ export const PUT = requireAdmin(async (
       { status: 500 }
     )
   }
-})
+}
 
-export const DELETE = requireAdmin(async (
+export async function DELETE(
   request: NextRequest,
-  user,
   { params }: { params: { id: string } }
-) => {
+) {
+  const user = await getAuthUser(request)
+  
+  if (!user || user.role !== 'ADMIN') {
+    return Response.json({ error: 'Admin access required' }, { status: 403 })
+  }
+
   try {
     // Check if product has any orders
     const orderCount = await db.orderItem.count({
@@ -129,4 +144,4 @@ export const DELETE = requireAdmin(async (
       { status: 500 }
     )
   }
-})
+}
