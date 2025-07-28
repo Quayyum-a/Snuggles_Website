@@ -27,15 +27,19 @@ const Navigation = () => {
       <div className="max-w-7xl mx-auto container-padding">
         <div className="flex items-center justify-between h-16">
           
-          {/* Logo */}
-          <Link href="/" className="flex items-center hover-lift">
+          {/* Logo - Amazon-style brand placement */}
+          <Link href="/" className="flex items-center hover-lift group">
             <Image
               src="https://cdn.builder.io/api/v1/image/assets%2Fe4be0ebfbe0245c78c482ccb62c8df0a%2F305ba234b92148049f51344426bbddcb?format=webp&width=800"
               alt="SNUGGLES - Your Comfort Has Arrived"
               width={120}
               height={120}
-              className="h-12 w-auto"
+              className="h-12 w-auto transition-transform group-hover:scale-105"
             />
+            <div className="hidden sm:block ml-2 text-xs text-gray-600 font-medium">
+              <div className="text-black font-bold tracking-wide">SNUGGLES</div>
+              <div className="text-gold text-[10px] uppercase tracking-wider">STREETWEAR</div>
+            </div>
           </Link>
 
           {/* Desktop Navigation */}
@@ -166,11 +170,12 @@ const Navigation = () => {
         </div>
       </div>
 
-      {/* Nike-style Announcement Bar */}
+      {/* Nike-style Announcement Bar with SNUGGLES branding */}
       <div className="bg-black text-white text-center py-2 text-sm">
         <p>
-          <span className="text-gold font-semibold">FREE DELIVERY</span> on orders over ₦50,000 | 
-          <span className="ml-2">Lagos same-day delivery available</span>
+          <span className="text-gold font-semibold">SNUGGLES</span> FREE DELIVERY on orders over ₦50,000 |
+          <span className="ml-2">Lagos same-day delivery available</span> |
+          <span className="ml-2 text-gold font-medium">Join the SNUGGLES family</span>
         </p>
       </div>
     </nav>
