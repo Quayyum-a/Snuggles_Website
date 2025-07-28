@@ -1,44 +1,51 @@
 'use client'
 
 import React, { useState } from 'react'
-import Image from 'next/image'
-import { useParams } from 'next/navigation'
-import { ArrowLeft, ShoppingBag, Heart, Share2, Star, Truck, Shield, RotateCcw, Plus, Minus, ChevronRight } from 'lucide-react'
-import Link from 'next/link'
-import { getProductById, products } from '@/lib/products'
-import { useCart } from '@/contexts/CartContext'
-import { getProductRating } from '@/lib/productRatings'
+import { useParams, useRouter } from 'next/navigation'
 import Navigation from '@/components/Navigation'
 import Footer from '@/components/Footer'
+import { getProductById } from '@/lib/products'
+import { useCart } from '@/contexts/CartContext'
+import { ArrowLeft, Star, ShoppingBag, Heart, Share2, Truck, Shield, RotateCcw } from 'lucide-react'
+import Link from 'next/link'
 
 export default function ProductPage() {
   const params = useParams()
-  const productId = params.id as string
-  const product = getProductById(productId)
-  
+  const router = useRouter()
   const { addItem } = useCart()
-  const [selectedSize, setSelectedSize] = useState(product?.sizes[0] || '')
-  const [selectedColor, setSelectedColor] = useState(product?.colors[0] || '')
+  const [selectedSize, setSelectedSize] = useState('')
+  const [selectedColor, setSelectedColor] = useState('')
   const [quantity, setQuantity] = useState(1)
-  const [activeImageIndex, setActiveImageIndex] = useState(0)
-  const [isWishlisted, setIsWishlisted] = useState(false)
-
-  // Get static rating to prevent hydration mismatch
-  const { rating, reviewCount } = getProductRating(productId)
-  const relatedProducts = products.filter(p => p.id !== productId).slice(0, 4)
+  
+  const product = getProductById(params.id as string)
 
   if (!product) {
     return (
-      <div className="min-h-screen bg-white text-gray-900 flex items-center justify-center">
-        <div className="text-center">
-          <h1 className="text-2xl font-bold mb-4">Product Not Found</h1>
-          <Link href="/shop" className="text-gold hover:underline">
-            Back to Shop
-          </Link>
+      <div className="min-h-screen bg-white">
+        <Navigation />
+        <div className="pt-24 pb-16">
+          <div className="max-w-7xl mx-auto container-padding text-center">
+            <h1 className="text-4xl font-black text-black mb-4">Product Not Found</h1>
+            <p className="text-gray-600 mb-8">Sorry, we couldn't find that SNUGGLES product.</p>
+            <Link href="/shop" className="bg-black text-white px-8 py-4 font-bold tracking-wider hover:bg-gray-800 transition-colors">
+              BACK TO SHOP
+            </Link>
+          </div>
         </div>
+        <Footer />
       </div>
     )
   }
+
+  // Set default selections
+  React.useEffect(() => {
+    if (product.colors.length > 0 && !selectedColor) {
+      setSelectedColor(product.colors[0])
+    }
+    if (product.sizes.length > 0 && !selectedSize) {
+      setSelectedSize(product.sizes[0])
+    }
+  }, [product, selectedColor, selectedSize])
 
   const handleAddToCart = () => {
     if (!selectedSize || !selectedColor) {
@@ -46,314 +53,237 @@ export default function ProductPage() {
       return
     }
     
-    for (let i = 0; i < quantity; i++) {
-      addItem(product, selectedSize, selectedColor)
-    }
+    addItem(product, selectedSize, selectedColor)
   }
 
   return (
     <div className="min-h-screen bg-white">
       <Navigation />
       
-      <main className="pt-4">
-        {/* Breadcrumb */}
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-          <nav className="breadcrumb">
-            <Link href="/" className="hover:text-gold">Home</Link>
-            <ChevronRight size={16} />
-            <Link href="/shop" className="hover:text-gold">Shop</Link>
-            <ChevronRight size={16} />
-            <span className="text-gray-900 font-medium">{product.name}</span>
-          </nav>
-        </div>
+      <main className="pt-24 pb-16">
+        <div className="max-w-7xl mx-auto container-padding">
+          
+          {/* Breadcrumb */}
+          <div className="mb-8">
+            <button 
+              onClick={() => router.back()}
+              className="inline-flex items-center gap-2 text-gray-600 hover:text-black transition-colors"
+            >
+              <ArrowLeft className="w-4 h-4" />
+              Back
+            </button>
+            <div className="mt-2 text-sm text-gray-500">
+              <Link href="/shop" className="hover:text-black">Shop</Link> 
+              <span className="mx-2">/</span>
+              <span className="capitalize">{product.category}</span>
+              <span className="mx-2">/</span>
+              <span className="text-black">{product.name}</span>
+            </div>
+          </div>
 
-        {/* Product Details */}
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
+            
             {/* Product Images */}
             <div className="space-y-4">
-              {/* Main Image */}
-              <div className="aspect-square relative overflow-hidden rounded-lg bg-gray-100">
-                <Image
+              <div className="aspect-square bg-gray-50 rounded-2xl overflow-hidden">
+                <img
                   src={product.image}
                   alt={product.name}
-                  fill
-                  className="object-cover"
-                  priority
+                  className="w-full h-full object-cover"
                 />
               </div>
               
-              {/* Thumbnail Images */}
-              <div className="grid grid-cols-4 gap-2">
-                {[product.image, product.image, product.image, product.image].map((img, index) => (
-                  <button
-                    key={index}
-                    onClick={() => setActiveImageIndex(index)}
-                    className={`aspect-square relative overflow-hidden rounded border-2 ${
-                      index === activeImageIndex ? 'border-gray-900' : 'border-gray-200'
-                    }`}
-                  >
-                    <Image
-                      src={img}
-                      alt={`${product.name} view ${index + 1}`}
-                      fill
-                      className="object-cover"
+              {/* Thumbnail images */}
+              <div className="grid grid-cols-4 gap-4">
+                {[...Array(4)].map((_, i) => (
+                  <div key={i} className={`aspect-square bg-gray-100 rounded-lg overflow-hidden cursor-pointer border-2 ${i === 0 ? 'border-gold' : 'border-transparent hover:border-gray-300'} transition-colors`}>
+                    <img
+                      src={product.image}
+                      alt={`${product.name} view ${i + 1}`}
+                      className="w-full h-full object-cover"
                     />
-                  </button>
+                  </div>
                 ))}
               </div>
             </div>
 
             {/* Product Info */}
-            <div className="space-y-6">
-              {/* Brand & Title */}
-              <div>
-                <p className="text-sm text-gray-500 uppercase tracking-wide mb-2">SNUGGLES</p>
-                <h1 className="text-3xl font-bold text-gray-900 mb-4">
+            <div className="space-y-8">
+              
+              {/* Header */}
+              <div className="space-y-4">
+                <div className="flex items-center justify-between">
+                  <div className="inline-flex items-center gap-2 bg-black text-white px-3 py-1 text-xs font-bold tracking-wider uppercase">
+                    {product.featured && <span>FEATURED</span>}
+                    {product.drop && <span>LIMITED DROP</span>}
+                    {!product.featured && !product.drop && <span>SNUGGLES</span>}
+                  </div>
+                  
+                  <div className="flex items-center gap-2">
+                    <button className="p-2 hover:bg-gray-100 rounded-full transition-colors">
+                      <Heart className="w-5 h-5" />
+                    </button>
+                    <button className="p-2 hover:bg-gray-100 rounded-full transition-colors">
+                      <Share2 className="w-5 h-5" />
+                    </button>
+                  </div>
+                </div>
+                
+                <h1 className="text-4xl lg:text-5xl font-black text-black leading-tight">
                   {product.name}
                 </h1>
                 
-                {/* Rating */}
-                <div className="flex items-center space-x-4 mb-4">
-                  <div className="flex items-center">
-                    <div className="star-rating">
-                      {[...Array(5)].map((_, i) => (
-                        <Star
-                          key={i}
-                          size={16}
-                          className={`${
-                            i < Math.floor(rating) 
-                              ? 'text-yellow-400 fill-current' 
-                              : 'text-gray-300'
-                          }`}
-                        />
-                      ))}
-                    </div>
-                    <span className="text-sm text-gray-600 ml-2">
-                      {rating.toFixed(1)} ({reviewCount} reviews)
-                    </span>
+                <div className="flex items-center gap-4">
+                  <div className="text-3xl font-black text-gold">
+                    ₦{(product.price / 100).toLocaleString()}
                   </div>
-                  <button className="text-sm text-blue-600 hover:underline">
-                    See all reviews
-                  </button>
+                  
+                  <div className="flex items-center gap-1">
+                    {[...Array(5)].map((_, i) => (
+                      <Star key={i} className="w-4 h-4 text-gold fill-current" />
+                    ))}
+                    <span className="text-sm text-gray-600 ml-2">(4.8) 234 reviews</span>
+                  </div>
                 </div>
-
-                {/* Price */}
-                <div className="mb-6">
-                  <span className="text-3xl font-bold text-black">₦{product.price.toLocaleString()}</span>
-                  {product.drop && (
-                    <span className="original-price ml-3 text-lg line-through text-gray-500">₦{(product.price * 1.2).toLocaleString()}</span>
-                  )}
-                  <p className="text-sm text-gray-600 mt-1">
-                    FREE shipping on orders over ₦50,000 | Same-day delivery in Lagos
-                  </p>
-                </div>
-              </div>
-
-              {/* Description */}
-              <div>
-                <p className="text-gray-700 leading-relaxed">
+                
+                <p className="text-lg text-gray-600 leading-relaxed">
                   {product.description}
                 </p>
               </div>
 
-              {/* Color Selection */}
-              <div>
-                <h3 className="text-lg font-semibold text-gray-900 mb-3">Color</h3>
-                <div className="flex space-x-3">
-                  {product.colors.map((color) => (
-                    <button
-                      key={color}
-                      onClick={() => setSelectedColor(color)}
-                      className={`w-12 h-12 rounded-full border-2 transition-all duration-200 ${
-                        selectedColor === color 
-                          ? 'border-gray-900 scale-110' 
-                          : 'border-gray-300 hover:border-gray-400'
-                      }`}
-                      style={{
-                        backgroundColor: 
-                          color.toLowerCase() === 'gold' ? '#d4a422' : 
-                          color.toLowerCase() === 'white' ? '#ffffff' : '#000000'
-                      }}
-                    >
-                      <span className="sr-only">{color}</span>
-                    </button>
-                  ))}
-                </div>
-                <p className="text-sm text-gray-600 mt-2">
-                  Selected: {selectedColor || 'None'}
-                </p>
-              </div>
-
               {/* Size Selection */}
-              <div>
-                <div className="flex items-center justify-between mb-3">
-                  <h3 className="text-lg font-semibold text-gray-900">Size</h3>
-                  <button className="text-sm text-blue-600 hover:underline">
-                    Size guide
-                  </button>
-                </div>
-                <div className="grid grid-cols-4 gap-2">
+              <div className="space-y-4">
+                <h3 className="font-bold text-lg text-black">Size</h3>
+                <div className="flex flex-wrap gap-3">
                   {product.sizes.map((size) => (
                     <button
                       key={size}
                       onClick={() => setSelectedSize(size)}
-                      className={`py-3 text-center border rounded-md transition-colors duration-200 ${
-                        selectedSize === size 
-                          ? 'border-gray-900 bg-gray-900 text-white' 
-                          : 'border-gray-300 text-gray-700 hover:border-gray-400'
+                      className={`px-4 py-3 border-2 font-bold text-sm transition-colors ${
+                        selectedSize === size
+                          ? 'border-black bg-black text-white'
+                          : 'border-gray-300 text-black hover:border-black'
                       }`}
                     >
                       {size}
                     </button>
                   ))}
                 </div>
+                <Link href="/size-guide" className="text-sm text-gray-600 hover:text-black underline">
+                  Size Guide
+                </Link>
+              </div>
+
+              {/* Color Selection */}
+              <div className="space-y-4">
+                <h3 className="font-bold text-lg text-black">Color</h3>
+                <div className="flex flex-wrap gap-3">
+                  {product.colors.map((color) => (
+                    <button
+                      key={color}
+                      onClick={() => setSelectedColor(color)}
+                      className={`px-4 py-3 border-2 font-bold text-sm transition-colors ${
+                        selectedColor === color
+                          ? 'border-black bg-black text-white'
+                          : 'border-gray-300 text-black hover:border-black'
+                      }`}
+                    >
+                      {color}
+                    </button>
+                  ))}
+                </div>
               </div>
 
               {/* Quantity */}
-              <div>
-                <h3 className="text-lg font-semibold text-gray-900 mb-3">Quantity</h3>
-                <div className="flex items-center space-x-4">
-                  <button
-                    onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                    className="w-10 h-10 border border-gray-300 rounded-md flex items-center justify-center hover:border-gray-400 transition-colors duration-200"
-                  >
-                    <Minus size={16} />
-                  </button>
-                  <span className="text-lg font-medium w-12 text-center">{quantity}</span>
-                  <button
-                    onClick={() => setQuantity(quantity + 1)}
-                    className="w-10 h-10 border border-gray-300 rounded-md flex items-center justify-center hover:border-gray-400 transition-colors duration-200"
-                  >
-                    <Plus size={16} />
-                  </button>
+              <div className="space-y-4">
+                <h3 className="font-bold text-lg text-black">Quantity</h3>
+                <div className="flex items-center gap-4">
+                  <div className="flex items-center border border-gray-300">
+                    <button
+                      onClick={() => setQuantity(Math.max(1, quantity - 1))}
+                      className="px-4 py-3 hover:bg-gray-100 transition-colors"
+                    >
+                      −
+                    </button>
+                    <span className="px-6 py-3 font-bold">{quantity}</span>
+                    <button
+                      onClick={() => setQuantity(quantity + 1)}
+                      className="px-4 py-3 hover:bg-gray-100 transition-colors"
+                    >
+                      +
+                    </button>
+                  </div>
+                  
+                  {product.inStock ? (
+                    <span className="text-sm text-green-600 font-medium">✓ In Stock</span>
+                  ) : (
+                    <span className="text-sm text-red-600 font-medium">Out of Stock</span>
+                  )}
                 </div>
               </div>
 
-              {/* Actions */}
+              {/* Add to Cart */}
               <div className="space-y-4">
                 <button
                   onClick={handleAddToCart}
-                  disabled={!product.inStock || !selectedSize || !selectedColor}
-                  className="w-full amazon-button py-4 text-lg font-semibold disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center space-x-2"
+                  disabled={!product.inStock}
+                  className="w-full bg-gold text-black py-4 font-black text-lg tracking-wider hover:bg-yellow-400 transition-colors disabled:bg-gray-300 disabled:cursor-not-allowed inline-flex items-center justify-center gap-3"
                 >
-                  <ShoppingBag size={20} />
-                  <span>{product.inStock ? 'Add to Cart' : 'Out of Stock'}</span>
+                  <ShoppingBag className="w-5 h-5" />
+                  ADD TO CART
                 </button>
-
-                <div className="grid grid-cols-2 gap-4">
-                  <button 
-                    onClick={() => setIsWishlisted(!isWishlisted)}
-                    className="flex items-center justify-center space-x-2 border border-gray-300 text-gray-700 py-3 rounded-md hover:border-gray-400 transition-colors duration-200"
-                  >
-                    <Heart size={18} className={isWishlisted ? 'text-red-500 fill-current' : ''} />
-                    <span>Wishlist</span>
-                  </button>
-                  <button className="flex items-center justify-center space-x-2 border border-gray-300 text-gray-700 py-3 rounded-md hover:border-gray-400 transition-colors duration-200">
-                    <Share2 size={18} />
-                    <span>Share</span>
-                  </button>
-                </div>
+                
+                <button className="w-full border-2 border-black text-black py-4 font-bold text-sm tracking-wider hover:bg-black hover:text-white transition-colors">
+                  BUY NOW
+                </button>
               </div>
 
               {/* Features */}
-              <div className="border-t border-gray-200 pt-6">
-                <div className="space-y-4">
-                  <div className="flex items-center space-x-3">
-                    <Truck size={20} className="text-green-600" />
-                    <span className="text-gray-700">FREE shipping and returns</span>
-                  </div>
-                  <div className="flex items-center space-x-3">
-                    <RotateCcw size={20} className="text-blue-600" />
-                    <span className="text-gray-700">30-day return policy</span>
-                  </div>
-                  <div className="flex items-center space-x-3">
-                    <Shield size={20} className="text-gold" />
-                    <span className="text-gray-700">Authentic guarantee</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Reviews Section */}
-          <div className="mt-16 border-t border-gray-200 pt-16">
-            <h2 className="text-2xl font-bold text-gray-900 mb-8">Customer Reviews</h2>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              {/* Review Summary */}
-              <div className="space-y-4">
-                <div className="flex items-center space-x-2">
-                  <span className="text-3xl font-bold">{rating.toFixed(1)}</span>
-                  <div className="star-rating">
-                    {[...Array(5)].map((_, i) => (
-                      <Star
-                        key={i}
-                        size={20}
-                        className={`${
-                          i < Math.floor(rating) 
-                            ? 'text-yellow-400 fill-current' 
-                            : 'text-gray-300'
-                        }`}
-                      />
-                    ))}
-                  </div>
-                </div>
-                <p className="text-gray-600">{reviewCount} reviews</p>
-              </div>
-
-              {/* Sample Reviews */}
-              <div className="md:col-span-2 space-y-6">
-                <div className="border-b border-gray-200 pb-6">
-                  <div className="flex items-center space-x-4 mb-2">
-                    <div className="star-rating">
-                      {[...Array(5)].map((_, i) => (
-                        <Star key={i} size={14} className="text-yellow-400 fill-current" />
-                      ))}
-                    </div>
-                    <span className="text-sm text-gray-600">by John D.</span>
-                  </div>
-                  <p className="text-gray-700">Amazing quality and comfortable fit. The design is exactly what I was looking for!</p>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-8 border-t border-gray-200">
+                <div className="text-center space-y-2">
+                  <Truck className="w-8 h-8 mx-auto text-gold" />
+                  <div className="font-bold text-sm">FREE SHIPPING</div>
+                  <div className="text-xs text-gray-600">Orders over ₦50,000</div>
                 </div>
                 
-                <div className="border-b border-gray-200 pb-6">
-                  <div className="flex items-center space-x-4 mb-2">
-                    <div className="star-rating">
-                      {[...Array(4)].map((_, i) => (
-                        <Star key={i} size={14} className="text-yellow-400 fill-current" />
-                      ))}
-                      <Star size={14} className="text-gray-300" />
-                    </div>
-                    <span className="text-sm text-gray-600">by Sarah M.</span>
-                  </div>
-                  <p className="text-gray-700">Great streetwear piece. Fast delivery and excellent customer service.</p>
+                <div className="text-center space-y-2">
+                  <RotateCcw className="w-8 h-8 mx-auto text-gold" />
+                  <div className="font-bold text-sm">EASY RETURNS</div>
+                  <div className="text-xs text-gray-600">30-day return policy</div>
+                </div>
+                
+                <div className="text-center space-y-2">
+                  <Shield className="w-8 h-8 mx-auto text-gold" />
+                  <div className="font-bold text-sm">AUTHENTIC</div>
+                  <div className="text-xs text-gray-600">100% genuine SNUGGLES</div>
                 </div>
               </div>
-            </div>
-          </div>
 
-          {/* Related Products */}
-          <div className="mt-16 border-t border-gray-200 pt-16">
-            <h2 className="text-2xl font-bold text-gray-900 mb-8">You might also like</h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-              {relatedProducts.map((relatedProduct) => (
-                <Link key={relatedProduct.id} href={`/product/${relatedProduct.id}`} className="group">
-                  <div className="aspect-square relative overflow-hidden rounded-lg bg-gray-100 mb-4">
-                    <Image
-                      src={relatedProduct.image}
-                      alt={relatedProduct.name}
-                      fill
-                      className="object-cover group-hover:scale-105 transition-transform duration-300"
-                    />
+              {/* Product Details */}
+              <div className="space-y-6 pt-8 border-t border-gray-200">
+                <h3 className="font-black text-xl text-black">Product Details</h3>
+                
+                <div className="space-y-4">
+                  <div className="grid grid-cols-2 gap-4 text-sm">
+                    <div className="text-gray-600">Material:</div>
+                    <div className="font-medium">100% Premium Cotton</div>
+                    
+                    <div className="text-gray-600">Fit:</div>
+                    <div className="font-medium">Regular Fit</div>
+                    
+                    <div className="text-gray-600">Care:</div>
+                    <div className="font-medium">Machine Wash Cold</div>
+                    
+                    <div className="text-gray-600">Made In:</div>
+                    <div className="font-medium">Lagos, Nigeria</div>
                   </div>
-                  <h3 className="text-sm font-medium text-gray-900">{relatedProduct.name}</h3>
-                  <p className="text-sm text-gray-600">₦{relatedProduct.price.toLocaleString()}</p>
-                </Link>
-              ))}
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </main>
-
+      
       <Footer />
     </div>
   )

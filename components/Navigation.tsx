@@ -5,12 +5,12 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { Search, User, ShoppingBag, Menu, X, Heart } from 'lucide-react'
 import { useCart } from '@/contexts/CartContext'
+import CartDrawer from './CartDrawer'
 
 const Navigation = () => {
-  const { items, openCart } = useCart()
+  const { itemCount, openCart } = useCart()
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [isScrolled, setIsScrolled] = useState(false)
-  const itemCount = items.reduce((sum, item) => sum + item.quantity, 0)
 
   useEffect(() => {
     const handleScroll = () => {
@@ -28,14 +28,18 @@ const Navigation = () => {
         <div className="flex items-center justify-between h-16">
           
           {/* Logo */}
-          <Link href="/" className="flex items-center hover-lift">
+          <Link href="/" className="flex items-center hover-lift group">
             <Image
               src="https://cdn.builder.io/api/v1/image/assets%2Fe4be0ebfbe0245c78c482ccb62c8df0a%2F305ba234b92148049f51344426bbddcb?format=webp&width=800"
               alt="SNUGGLES - Your Comfort Has Arrived"
               width={120}
               height={120}
-              className="h-12 w-auto"
+              className="h-12 w-auto transition-transform group-hover:scale-105"
             />
+            <div className="hidden md:block ml-3 font-medium">
+              <div className="text-black font-black text-lg tracking-wide">SNUGGLES</div>
+              <div className="text-gold text-xs uppercase tracking-wider font-semibold">STREETWEAR</div>
+            </div>
           </Link>
 
           {/* Desktop Navigation */}
@@ -166,13 +170,16 @@ const Navigation = () => {
         </div>
       </div>
 
-      {/* Nike-style Announcement Bar */}
+      {/* Announcement Bar */}
       <div className="bg-black text-white text-center py-2 text-sm">
         <p>
-          <span className="text-gold font-semibold">FREE DELIVERY</span> on orders over ₦50,000 | 
-          <span className="ml-2">Lagos same-day delivery available</span>
+          <span className="text-gold font-semibold">FREE DELIVERY</span> on orders over ₦50,000 |
+          <span className="ml-2">Lagos same-day delivery available</span> |
+          <span className="ml-2">Join the <span className="text-gold font-black text-lg">SNUGGLES</span> family</span>
         </p>
       </div>
+
+      <CartDrawer />
     </nav>
   )
 }

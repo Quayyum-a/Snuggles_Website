@@ -28,11 +28,11 @@ const Footer = () => {
                 <h3 className="heading-hero text-white">
                   NEVER MISS
                   <br />
-                  <span className="text-gold">A DROP</span>
+                  A <span className="text-gold">SNUGGLES</span> DROP
                 </h3>
                 <p className="text-gray-400 text-lg leading-relaxed">
-                  Be the first to know about new releases, exclusive collaborations, 
-                  and street culture updates. Join the SNUGGLES family.
+                  Be the first to know about new <span className="text-white font-semibold">SNUGGLES</span> releases,
+                  exclusive collaborations, and street culture updates. Join the <span className="text-gold font-semibold">SNUGGLES</span> family.
                 </p>
               </div>
 
@@ -55,7 +55,7 @@ const Footer = () => {
                   </button>
                 </div>
                 <p className="text-xs text-gray-500">
-                  By subscribing, you agree to our Privacy Policy and consent to receive updates from SNUGGLES.
+                  By subscribing, you agree to our Privacy Policy and consent to receive updates from <span className="text-gold font-medium">SNUGGLES</span>.
                 </p>
               </form>
             </div>
@@ -89,8 +89,9 @@ const Footer = () => {
             />
             
             <p className="text-gray-400 max-w-md leading-relaxed">
-              Authentic streetwear from Lagos to the world. We don't just make clothes—
-              we create culture, build community, and celebrate the streets that raised us.
+              <span className="text-white font-semibold">SNUGGLES</span> brings authentic streetwear from Lagos to the world.
+              We don't just make clothes—we create culture, build community, and celebrate the streets that raised us.
+              <span className="block mt-2 text-gold font-medium text-sm">"Your Comfort Has Arrived" - SNUGGLES</span>
             </p>
             
             {/* Contact Info */}
@@ -204,7 +205,7 @@ const Footer = () => {
           <div className="flex flex-col lg:flex-row justify-between items-center gap-6">
             
             <div className="flex flex-col sm:flex-row items-center gap-6 text-sm text-gray-400">
-              <span>© 2024 SNUGGLES. All rights reserved.</span>
+              <span>© 2024 <span className="text-gold font-semibold">SNUGGLES</span>. All rights reserved.</span>
               <div className="flex space-x-6">
                 <Link href="/privacy" className="hover:text-gold transition-colors duration-200">
                   Privacy Policy
@@ -216,9 +217,9 @@ const Footer = () => {
             </div>
 
             <div className="flex items-center gap-4 text-sm text-gray-400">
-              <span>Made with ❤️ in Lagos</span>
+              <span>Made with ❤️ in Lagos by <span className="text-gold font-semibold">SNUGGLES</span></span>
               <div className="w-2 h-2 bg-gold rounded-full"></div>
-              <span className="text-gold font-semibold">STREET CULTURE</span>
+              <span className="text-gold font-semibold">SNUGGLES STREET CULTURE</span>
             </div>
           </div>
         </div>
