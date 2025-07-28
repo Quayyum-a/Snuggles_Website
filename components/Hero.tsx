@@ -21,10 +21,10 @@ const Hero = () => {
           <div className="space-y-8 animate-fade-in">
             
             {/* Subtle brand tagline */}
-            <div className="inline-flex items-center gap-2 bg-gold/10 text-black px-4 py-2 text-sm font-medium rounded-full">
-              <Star className="w-4 h-4 text-gold fill-current" />
-              <span className="font-semibold">SNUGGLES</span>
-              <span className="text-gray-600">STREETWEAR</span>
+            <div className="inline-flex items-center gap-2 bg-gold/20 text-black px-6 py-3 font-medium rounded-full border-2 border-gold/30">
+              <Star className="w-5 h-5 text-gold fill-current" />
+              <span className="font-black text-lg tracking-wide">SNUGGLES</span>
+              <span className="text-gray-700 font-semibold">STREETWEAR</span>
             </div>
 
             <div className="space-y-6">
@@ -35,8 +35,8 @@ const Hero = () => {
               </h1>
               
               <p className="text-lg text-gray-600 max-w-md leading-relaxed">
-                Authentic streetwear from Lagos to the world. 
-                <span className="font-semibold text-black"> SNUGGLES</span> creates culture, 
+                Authentic streetwear from Lagos to the world.
+                <span className="font-black text-black text-xl"> SNUGGLES</span> creates culture,
                 builds community, and celebrates the streets that raised us.
               </p>
 
@@ -69,11 +69,11 @@ const Hero = () => {
             </div>
 
             {/* Clean brand promise */}
-            <div className="bg-gray-50 border-l-4 border-gold pl-6 py-4 rounded-r-lg">
-              <p className="text-sm font-medium text-black mb-1">
+            <div className="bg-gold/10 border-l-4 border-gold pl-6 py-4 rounded-r-lg border border-gold/20">
+              <p className="text-base font-black text-black mb-1 tracking-wide">
                 THE SNUGGLES PROMISE
               </p>
-              <p className="text-sm text-gray-600">
+              <p className="text-sm text-gray-700 font-medium">
                 Premium quality, authentic designs, and that perfect streetwear fit.
               </p>
             </div>
@@ -93,7 +93,7 @@ const Hero = () => {
               {/* Clean overlay branding */}
               <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent p-8">
                 <div className="text-white space-y-2">
-                  <div className="text-xs text-gold font-semibold tracking-wider uppercase">
+                  <div className="text-sm text-gold font-black tracking-wider uppercase">
                     SNUGGLES COLLECTION
                   </div>
                   <h3 className="text-2xl font-bold">The Kids Next Door Tee</h3>
