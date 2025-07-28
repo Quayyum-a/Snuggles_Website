@@ -94,9 +94,9 @@ model Order {
   shippingAddress   Address? @relation(fields: [shippingAddressId], references: [id])
 
   // Manual shipping info for guest orders
-  shippingName    String?
-  shippingPhone   String?
-  shippingAddress String?
+  shippingName     String?
+  shippingPhone    String?
+  shippingAddressText String?
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
