@@ -2,28 +2,34 @@ import { NextRequest } from 'next/server'
 import { db } from '@/lib/db'
 import { getAuthUser } from '@/lib/auth'
 import { sendEmail, emailTemplates } from '@/lib/email'
+import { withOrderRateLimit, withApiRateLimit } from '@/lib/rateLimiter'
+import { validateOrderData, sanitizeString } from '@/lib/validation'
+import { logInfo, logError, logWarn } from '@/lib/logger'
 
-export async function POST(request: NextRequest) {
+async function createOrderHandler(request: NextRequest) {
   try {
-    const { items, email, shippingInfo } = await request.json()
-    
+    const rawData = await request.json()
+
+    // Validate order data
+    const validation = validateOrderData(rawData)
+    if (!validation.isValid) {
+      logWarn('Invalid order attempt', {
+        errors: validation.errors,
+        ip: request.headers.get('x-forwarded-for')
+      })
+      return Response.json(
+        { error: validation.errors.join(', ') },
+        { status: 400 }
+      )
+    }
+
     // Get authenticated user (if any)
     const user = await getAuthUser(request)
 
-    // Validate required fields
-    if (!items || !Array.isArray(items) || items.length === 0) {
-      return Response.json(
-        { error: 'Order items are required' },
-        { status: 400 }
-      )
-    }
-
-    if (!email) {
-      return Response.json(
-        { error: 'Email is required' },
-        { status: 400 }
-      )
-    }
+    // Sanitize input
+    const email = sanitizeString(rawData.email.toLowerCase())
+    const items = rawData.items
+    const shippingInfo = rawData.shippingInfo
 
     // Calculate total and validate products
     let total = 0
@@ -120,7 +126,16 @@ export async function POST(request: NextRequest) {
       subject: confirmationTemplate.subject,
       html: confirmationTemplate.html,
     }).catch(error => {
-      console.error('Failed to send order confirmation email:', error)
+      logError('Failed to send order confirmation email', error)
+    })
+
+    logInfo('Order created successfully', {
+      orderId: order.id,
+      email: order.email,
+      total: order.total,
+      itemCount: order.items.length,
+      userId: user?.id,
+      ip: request.headers.get('x-forwarded-for')
     })
 
     return Response.json({
@@ -129,7 +144,7 @@ export async function POST(request: NextRequest) {
     })
 
   } catch (error) {
-    console.error('Order creation error:', error)
+    logError('Order creation error', error)
     return Response.json(
       { error: 'Internal server error' },
       { status: 500 }
@@ -137,7 +152,7 @@ export async function POST(request: NextRequest) {
   }
 }
 
-export async function GET(request: NextRequest) {
+async function getOrdersHandler(request: NextRequest) {
   try {
     const user = await getAuthUser(request)
     
@@ -160,10 +175,13 @@ export async function GET(request: NextRequest) {
     return Response.json({ orders })
 
   } catch (error) {
-    console.error('Orders fetch error:', error)
+    logError('Orders fetch error', error)
     return Response.json(
       { error: 'Internal server error' },
       { status: 500 }
     )
   }
 }
+
+export const POST = withOrderRateLimit(createOrderHandler)
+export const GET = withApiRateLimit(getOrdersHandler)
