@@ -52,11 +52,16 @@ export async function GET(
   }
 }
 
-export const PUT = requireAdmin(async (
-  request: NextRequest, 
-  user,
+export async function PUT(
+  request: NextRequest,
   { params }: { params: { id: string } }
-) => {
+) {
+  const user = await getAuthUser(request)
+
+  if (!user || user.role !== 'ADMIN') {
+    return Response.json({ error: 'Admin access required' }, { status: 403 })
+  }
+
   try {
     const { status } = await request.json()
 
@@ -84,4 +89,4 @@ export const PUT = requireAdmin(async (
       { status: 500 }
     )
   }
-})
+}
