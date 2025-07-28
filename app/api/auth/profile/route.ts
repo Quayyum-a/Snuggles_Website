@@ -1,5 +1,6 @@
 import { NextRequest } from 'next/server'
 import { requireAuth } from '@/lib/auth'
+import { db } from '@/lib/db'
 
 export const GET = requireAuth(async (request: NextRequest, user) => {
   return Response.json({ user })
