@@ -1,6 +1,7 @@
 import { NextRequest } from 'next/server'
 import { db } from '@/lib/db'
 import { hashPassword, generateToken } from '@/lib/auth'
+import { sendEmail, emailTemplates } from '@/lib/email'
 
 export async function POST(request: NextRequest) {
   try {
@@ -52,6 +53,16 @@ export async function POST(request: NextRequest) {
       userId: user.id,
       email: user.email,
       role: user.role,
+    })
+
+    // Send welcome email (don't wait for it)
+    const welcomeTemplate = emailTemplates.welcomeEmail(user)
+    sendEmail({
+      to: user.email,
+      subject: welcomeTemplate.subject,
+      html: welcomeTemplate.html,
+    }).catch(error => {
+      console.error('Failed to send welcome email:', error)
     })
 
     // Set cookie

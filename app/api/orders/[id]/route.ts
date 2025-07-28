@@ -1,6 +1,7 @@
 import { NextRequest } from 'next/server'
 import { db } from '@/lib/db'
 import { getAuthUser, requireAdmin } from '@/lib/auth'
+import { sendEmail, emailTemplates } from '@/lib/email'
 
 export async function GET(
   request: NextRequest,
@@ -76,6 +77,18 @@ export async function PUT(
         }
       }
     })
+
+    // Send status update email (don't wait for it)
+    if (status === 'SHIPPED' || status === 'DELIVERED' || status === 'PROCESSING') {
+      const statusTemplate = emailTemplates.orderStatusUpdate(order)
+      sendEmail({
+        to: order.email,
+        subject: statusTemplate.subject,
+        html: statusTemplate.html,
+      }).catch(error => {
+        console.error('Failed to send order status update email:', error)
+      })
+    }
 
     return Response.json({
       order,

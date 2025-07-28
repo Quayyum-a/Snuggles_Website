@@ -1,6 +1,7 @@
 import { NextRequest } from 'next/server'
 import { db } from '@/lib/db'
 import { getAuthUser } from '@/lib/auth'
+import { sendEmail, emailTemplates } from '@/lib/email'
 
 export async function POST(request: NextRequest) {
   try {
