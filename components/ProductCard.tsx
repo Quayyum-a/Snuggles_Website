@@ -11,6 +11,7 @@ interface ProductCardProps {
   product: Product
   priority?: boolean
   layout?: 'default' | 'featured' | 'minimal'
+  viewMode?: 'grid' | 'list'
 }
 
 const ProductCard: React.FC<ProductCardProps> = ({ 
