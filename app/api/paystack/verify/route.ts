@@ -1,77 +1,97 @@
-import { NextRequest, NextResponse } from 'next/server'
+import { NextRequest } from 'next/server'
+import { db } from '@/lib/db'
 
-const PAYSTACK_SECRET_KEY = process.env.PAYSTACK_SECRET_KEY || 'sk_test_your_paystack_secret_key'
-
-export async function GET(request: NextRequest) {
+export async function POST(request: NextRequest) {
   try {
-    const { searchParams } = new URL(request.url)
-    const reference = searchParams.get('reference')
+    const { reference } = await request.json()
 
-    if (!reference) {
-      return NextResponse.json(
-        { error: 'Payment reference is required' },
-        { status: 400 }
-      )
-    }
-
-    // Verify payment with Paystack
+    // Verify transaction with Paystack
     const response = await fetch(`https://api.paystack.co/transaction/verify/${reference}`, {
       method: 'GET',
       headers: {
-        'Authorization': `Bearer ${PAYSTACK_SECRET_KEY}`,
-        'Content-Type': 'application/json',
+        Authorization: `Bearer ${process.env.PAYSTACK_SECRET_KEY}`,
       },
     })
 
     const data = await response.json()
 
-    if (!response.ok) {
-      console.error('Paystack verification failed:', data)
-      return NextResponse.json(
-        { error: 'Payment verification failed', details: data },
-        { status: 400 }
-      )
-    }
+    if (data.status && data.data.status === 'success') {
+      const orderId = data.data.metadata?.orderId
 
-    const paymentData = data.data
-
-    // Check if payment was successful
-    if (paymentData.status === 'success') {
-      // In production, you would:
-      // 1. Save order to database
-      // 2. Update inventory
-      // 3. Send confirmation email
-      // 4. Trigger fulfillment process
-      
-      return NextResponse.json({
-        success: true,
-        verified: true,
-        data: {
-          reference: paymentData.reference,
-          amount: paymentData.amount / 100, // Convert back from kobo
-          currency: paymentData.currency,
-          status: paymentData.status,
-          paid_at: paymentData.paid_at,
-          customer: {
-            email: paymentData.customer.email,
-            customer_code: paymentData.customer.customer_code
+      if (orderId) {
+        // Update order status
+        const order = await db.order.update({
+          where: { id: orderId },
+          data: {
+            status: 'CONFIRMED',
+            paymentStatus: 'SUCCESS',
+            paymentId: reference,
           },
-          metadata: paymentData.metadata
-        }
-      })
-    } else {
-      return NextResponse.json({
-        success: false,
-        verified: false,
-        status: paymentData.status,
-        message: 'Payment was not successful'
-      })
+          include: {
+            items: {
+              include: {
+                product: true
+              }
+            }
+          }
+        })
+
+        return Response.json({
+          status: true,
+          message: 'Payment verified successfully',
+          order,
+        })
+      }
     }
+
+    // If payment failed, restore inventory
+    if (data.data?.metadata?.orderId) {
+      const orderId = data.data.metadata.orderId
+      
+      const order = await db.order.findUnique({
+        where: { id: orderId },
+        include: { items: true }
+      })
+
+      if (order) {
+        // Restore inventory
+        for (const item of order.items) {
+          await db.productInventory.update({
+            where: {
+              productId_size_color: {
+                productId: item.productId,
+                size: item.size,
+                color: item.color,
+              }
+            },
+            data: {
+              quantity: {
+                increment: item.quantity
+              }
+            }
+          })
+        }
+
+        // Update order status
+        await db.order.update({
+          where: { id: orderId },
+          data: {
+            status: 'CANCELLED',
+            paymentStatus: 'FAILED',
+          }
+        })
+      }
+    }
+
+    return Response.json(
+      { error: 'Payment verification failed' },
+      { status: 400 }
+    )
 
   } catch (error) {
     console.error('Payment verification error:', error)
-    return NextResponse.json(
-      { error: 'Internal server error', details: error instanceof Error ? error.message : 'Unknown error' },
+    return Response.json(
+      { error: 'Internal server error' },
       { status: 500 }
     )
   }
