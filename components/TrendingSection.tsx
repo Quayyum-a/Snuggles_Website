@@ -44,15 +44,17 @@ const TrendingSection = () => {
         {/* Products Grid */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
           {trendingProducts.map((product) => (
-            <div key={product.id} className="group cursor-pointer">
-              <div className="aspect-square bg-white overflow-hidden mb-4">
-                <img
-                  src={product.image}
-                  alt={product.name}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                />
+            <Link key={product.id} href={`/product/${product.id}`}>
+              <div className="group cursor-pointer">
+                <div className="aspect-square bg-white overflow-hidden mb-4">
+                  <img
+                    src={product.image}
+                    alt={product.name}
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                  />
+                </div>
               </div>
-            </div>
+            </Link>
           ))}
         </div>
 

@@ -38,24 +38,26 @@ const CollectionShowcase = () => {
           </div>
 
           {/* Image Side */}
-          <div className="relative">
-            <div className="relative aspect-square bg-white rounded-lg overflow-hidden">
-              <img
-                src="https://cdn.builder.io/api/v1/image/assets%2Fe4be0ebfbe0245c78c482ccb62c8df0a%2F3ea37fd4c46e403298758b84e2afb0c0?format=webp&width=800"
-                alt="The Kids Next Door Tee"
-                className="w-full h-full object-cover"
-              />
+          <Link href="/product/kids-next-door-tee">
+            <div className="relative cursor-pointer group">
+              <div className="relative aspect-square bg-white rounded-lg overflow-hidden">
+                <img
+                  src="https://cdn.builder.io/api/v1/image/assets%2Fe4be0ebfbe0245c78c482ccb62c8df0a%2F3ea37fd4c46e403298758b84e2afb0c0?format=webp&width=800"
+                  alt="The Kids Next Door Tee"
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                />
+              </div>
+
+              {/* Yellow accent */}
+              <div className="absolute -top-4 -right-4 w-16 h-16 bg-gold transform rotate-45"></div>
+
+              {/* Product info */}
+              <div className="absolute bottom-4 left-4 bg-white p-4 rounded shadow-lg group-hover:shadow-xl transition-shadow">
+                <div className="text-xs text-gray-500 mb-1">₦18,000</div>
+                <div className="font-bold text-sm text-black">THE KIDS NEXT DOOR</div>
+              </div>
             </div>
-            
-            {/* Yellow accent */}
-            <div className="absolute -top-4 -right-4 w-16 h-16 bg-gold transform rotate-45"></div>
-            
-            {/* Product info */}
-            <div className="absolute bottom-4 left-4 bg-white p-4 rounded shadow-lg">
-              <div className="text-xs text-gray-500 mb-1">₦18,000</div>
-              <div className="font-bold text-sm text-black">THE KIDS NEXT DOOR</div>
-            </div>
-          </div>
+          </Link>
         </div>
       </div>
     </section>
