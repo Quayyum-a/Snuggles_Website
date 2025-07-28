@@ -12,11 +12,6 @@ const Hero = () => {
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute top-20 left-10 w-64 h-64 bg-gold/5 rounded-full blur-3xl"></div>
         <div className="absolute bottom-20 right-10 w-96 h-96 bg-black/5 rounded-full blur-3xl"></div>
-        
-        {/* Nike-style floating SNUGGLES text */}
-        <div className="absolute top-1/4 right-0 text-[200px] font-black text-gray-50 select-none pointer-events-none transform rotate-12 translate-x-1/4">
-          SNUGGLES
-        </div>
       </div>
 
       <div className="max-w-7xl mx-auto container-padding relative z-10">
@@ -25,11 +20,11 @@ const Hero = () => {
           {/* Content Column */}
           <div className="space-y-8 animate-fade-in">
             
-            {/* Nike-style brand tagline */}
-            <div className="inline-flex items-center gap-2 bg-black text-white px-4 py-2 text-sm font-medium">
+            {/* Subtle brand tagline */}
+            <div className="inline-flex items-center gap-2 bg-gold/10 text-black px-4 py-2 text-sm font-medium rounded-full">
               <Star className="w-4 h-4 text-gold fill-current" />
-              <span>SNUGGLES</span>
-              <span className="text-gold">AUTHENTIC STREETWEAR</span>
+              <span className="font-semibold">SNUGGLES</span>
+              <span className="text-gray-600">STREETWEAR</span>
             </div>
 
             <div className="space-y-6">
@@ -37,10 +32,6 @@ const Hero = () => {
                 YOUR COMFORT
                 <br />
                 <span className="text-gold">HAS ARRIVED</span>
-                <br />
-                <span className="text-2xl font-normal text-gray-600 block mt-4">
-                  with <span className="font-black text-black">SNUGGLES</span>
-                </span>
               </h1>
               
               <p className="text-lg text-gray-600 max-w-md leading-relaxed">
@@ -49,7 +40,7 @@ const Hero = () => {
                 builds community, and celebrates the streets that raised us.
               </p>
 
-              {/* Amazon-style social proof */}
+              {/* Clean social proof */}
               <div className="flex items-center gap-4 text-sm text-gray-500">
                 <div className="flex items-center gap-1">
                   {[...Array(5)].map((_, i) => (
@@ -77,13 +68,13 @@ const Hero = () => {
               </Link>
             </div>
 
-            {/* Nike-style brand promise */}
-            <div className="border-l-4 border-gold pl-6 py-4 bg-gold/5">
+            {/* Clean brand promise */}
+            <div className="bg-gray-50 border-l-4 border-gold pl-6 py-4 rounded-r-lg">
               <p className="text-sm font-medium text-black mb-1">
                 THE SNUGGLES PROMISE
               </p>
               <p className="text-sm text-gray-600">
-                Premium quality, authentic designs, and that perfect streetwear fit you've been searching for.
+                Premium quality, authentic designs, and that perfect streetwear fit.
               </p>
             </div>
           </div>
@@ -92,53 +83,53 @@ const Hero = () => {
           <div className="relative animate-slide-up">
             
             {/* Main Product Showcase */}
-            <div className="relative aspect-square bg-gradient-to-br from-gray-900 to-gray-700 overflow-hidden group">
+            <div className="relative aspect-square bg-gradient-to-br from-gray-900 to-gray-700 rounded-2xl overflow-hidden group shadow-2xl">
               <img
                 src="https://cdn.builder.io/api/v1/image/assets%2Fe4be0ebfbe0245c78c482ccb62c8df0a%2F3ea37fd4c46e403298758b84e2afb0c0?format=webp&width=800"
                 alt="SNUGGLES - The Kids Next Door Tee"
                 className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
               />
               
-              {/* Nike-style overlay branding */}
-              <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-8">
+              {/* Clean overlay branding */}
+              <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent p-8">
                 <div className="text-white space-y-2">
                   <div className="text-xs text-gold font-semibold tracking-wider uppercase">
-                    SNUGGLES STREETWEAR
+                    SNUGGLES COLLECTION
                   </div>
                   <h3 className="text-2xl font-bold">The Kids Next Door Tee</h3>
                   <p className="text-sm text-gray-300">
-                    Premium cotton, authentic street culture vibes
+                    Premium cotton, authentic street culture
                   </p>
                   <div className="flex items-center justify-between pt-2">
                     <span className="text-lg font-bold text-gold">₦18,000</span>
-                    <span className="text-xs bg-gold text-black px-2 py-1 font-semibold">
-                      SNUGGLES EXCLUSIVE
+                    <span className="text-xs bg-gold text-black px-3 py-1 font-semibold rounded-full">
+                      FEATURED
                     </span>
                   </div>
                 </div>
               </div>
             </div>
 
-            {/* Floating brand elements */}
-            <div className="absolute -top-4 -right-4 w-16 h-16 bg-gold flex items-center justify-center text-black font-black text-sm transform rotate-12 animate-float">
+            {/* Subtle floating elements */}
+            <div className="absolute -top-4 -right-4 w-12 h-12 bg-gold rounded-full flex items-center justify-center text-black font-bold text-xs shadow-lg animate-float">
               SNG
             </div>
             
-            <div className="absolute -bottom-6 -left-6 bg-black text-white p-4 shadow-xl">
+            <div className="absolute -bottom-4 -left-4 bg-white border border-gray-200 p-4 rounded-xl shadow-lg">
               <div className="text-xs text-gold font-semibold mb-1">EST. 2024</div>
-              <div className="font-black text-lg">SNUGGLES</div>
-              <div className="text-xs text-gray-400">LAGOS, NIGERIA</div>
+              <div className="font-bold text-sm text-black">SNUGGLES</div>
+              <div className="text-xs text-gray-500">LAGOS, NIGERIA</div>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Bottom scroll indicator */}
+      {/* Minimal scroll indicator */}
       <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 text-center">
         <div className="text-xs text-gray-400 mb-2 font-medium tracking-wider">
-          DISCOVER SNUGGLES
+          DISCOVER MORE
         </div>
-        <div className="w-0.5 h-12 bg-gradient-to-b from-gold to-transparent mx-auto animate-pulse"></div>
+        <div className="w-0.5 h-8 bg-gradient-to-b from-gold to-transparent mx-auto animate-pulse"></div>
       </div>
     </section>
   )
