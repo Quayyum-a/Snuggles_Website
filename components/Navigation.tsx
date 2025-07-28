@@ -36,9 +36,9 @@ const Navigation = () => {
               height={120}
               className="h-12 w-auto transition-transform group-hover:scale-105"
             />
-            <div className="hidden md:block ml-3 text-xs font-medium">
-              <div className="text-black font-bold tracking-wide">SNUGGLES</div>
-              <div className="text-gold text-[10px] uppercase tracking-wider">STREETWEAR</div>
+            <div className="hidden md:block ml-3 font-medium">
+              <div className="text-black font-black text-lg tracking-wide">SNUGGLES</div>
+              <div className="text-gold text-xs uppercase tracking-wider font-semibold">STREETWEAR</div>
             </div>
           </Link>
 
@@ -175,7 +175,7 @@ const Navigation = () => {
         <p>
           <span className="text-gold font-semibold">FREE DELIVERY</span> on orders over ₦50,000 |
           <span className="ml-2">Lagos same-day delivery available</span> |
-          <span className="ml-2">Join the <span className="text-gold">SNUGGLES</span> family</span>
+          <span className="ml-2">Join the <span className="text-gold font-black text-lg">SNUGGLES</span> family</span>
         </p>
       </div>
     </nav>
