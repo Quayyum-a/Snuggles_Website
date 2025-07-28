@@ -113,6 +113,16 @@ export async function POST(request: NextRequest) {
       })
     }
 
+    // Send order confirmation email (don't wait for it)
+    const confirmationTemplate = emailTemplates.orderConfirmation(order)
+    sendEmail({
+      to: order.email,
+      subject: confirmationTemplate.subject,
+      html: confirmationTemplate.html,
+    }).catch(error => {
+      console.error('Failed to send order confirmation email:', error)
+    })
+
     return Response.json({
       order,
       message: 'Order created successfully'
