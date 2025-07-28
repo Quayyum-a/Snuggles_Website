@@ -11,12 +11,14 @@ interface ProductCardProps {
   product: Product
   priority?: boolean
   layout?: 'default' | 'featured' | 'minimal'
+  viewMode?: 'grid' | 'list'
 }
 
-const ProductCard: React.FC<ProductCardProps> = ({ 
-  product, 
-  priority = false, 
-  layout = 'default' 
+const ProductCard: React.FC<ProductCardProps> = ({
+  product,
+  priority = false,
+  layout = 'default',
+  viewMode = 'grid'
 }) => {
   const { addItem } = useCart()
   const [selectedSize, setSelectedSize] = useState(product.sizes[0])
