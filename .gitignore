@@ -37,6 +37,7 @@ Thumbs.db
 
 # Logs
 *.log
+logs/*.log
 
 # Runtime data
 pids
@@ -70,5 +71,3 @@ jspm_packages/
 
 # Yarn Integrity file
 .yarn-integrity
-
-/lib/generated/prisma
