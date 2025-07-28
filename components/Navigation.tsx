@@ -5,12 +5,12 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { Search, User, ShoppingBag, Menu, X, Heart } from 'lucide-react'
 import { useCart } from '@/contexts/CartContext'
+import CartDrawer from './CartDrawer'
 
 const Navigation = () => {
-  const { items, openCart } = useCart()
+  const { itemCount, openCart } = useCart()
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [isScrolled, setIsScrolled] = useState(false)
-  const itemCount = items.reduce((sum, item) => sum + item.quantity, 0)
 
   useEffect(() => {
     const handleScroll = () => {
@@ -178,6 +178,8 @@ const Navigation = () => {
           <span className="ml-2">Join the <span className="text-gold font-black text-lg">SNUGGLES</span> family</span>
         </p>
       </div>
+
+      <CartDrawer />
     </nav>
   )
 }
