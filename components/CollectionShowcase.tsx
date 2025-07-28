@@ -2,7 +2,6 @@
 
 import React from 'react'
 import Link from 'next/link'
-import { ArrowRight } from 'lucide-react'
 
 const CollectionShowcase = () => {
   return (
@@ -13,61 +12,48 @@ const CollectionShowcase = () => {
           {/* Content Side */}
           <div className="space-y-8">
             <div className="space-y-6">
-              <div className="inline-block bg-black text-white px-4 py-2 text-sm font-bold tracking-wider">
+              <div className="inline-block bg-black text-white px-4 py-2 text-xs font-bold tracking-wider uppercase">
                 NEW ARRIVAL
               </div>
               
-              <h2 className="text-5xl lg:text-6xl font-black text-black leading-tight">
+              <h2 className="text-4xl lg:text-5xl font-black text-black leading-tight">
                 <span className="text-gold">SNUGGLES</span>
                 <br />
                 COLLECTION
               </h2>
               
-              <p className="text-lg text-gray-600 leading-relaxed max-w-md">
-                Discover our latest streetwear collection. Each piece tells a story of 
-                authentic culture and premium comfort that defines modern street style.
+              <p className="text-base text-gray-600 leading-relaxed">
+                Discover our latest streetwear collection that brings 
+                together authentic culture and premium comfort. Each piece 
+                tells a story of modern street style.
               </p>
-            </div>
-
-            <div className="space-y-4">
-              <div className="flex items-center gap-4">
-                <div className="w-12 h-0.5 bg-gold"></div>
-                <span className="text-sm font-semibold text-black tracking-wider">PREMIUM QUALITY</span>
-              </div>
-              <div className="flex items-center gap-4">
-                <div className="w-12 h-0.5 bg-gold"></div>
-                <span className="text-sm font-semibold text-black tracking-wider">AUTHENTIC DESIGNS</span>
-              </div>
-              <div className="flex items-center gap-4">
-                <div className="w-12 h-0.5 bg-gold"></div>
-                <span className="text-sm font-semibold text-black tracking-wider">STREET CULTURE</span>
-              </div>
             </div>
 
             <Link 
               href="/collections"
-              className="inline-flex items-center gap-3 bg-black text-white px-8 py-4 font-bold text-sm tracking-wider hover:bg-gray-800 transition-colors group"
+              className="inline-block bg-black text-white px-6 py-3 font-bold text-sm tracking-wider hover:bg-gray-800 transition-colors"
             >
-              EXPLORE COLLECTION
-              <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+              SHOP NOW
             </Link>
           </div>
 
           {/* Image Side */}
           <div className="relative">
-            <div className="aspect-square bg-gradient-to-br from-gray-100 to-gray-200 rounded-2xl overflow-hidden">
+            <div className="relative aspect-square bg-white rounded-lg overflow-hidden">
               <img
                 src="https://cdn.builder.io/api/v1/image/assets%2Fe4be0ebfbe0245c78c482ccb62c8df0a%2F3ea37fd4c46e403298758b84e2afb0c0?format=webp&width=800"
-                alt="SNUGGLES Collection - The Kids Next Door Tee"
+                alt="The Kids Next Door Tee"
                 className="w-full h-full object-cover"
               />
             </div>
             
-            {/* Floating badge */}
-            <div className="absolute -bottom-6 -left-6 bg-gold text-black p-6 rounded-xl shadow-xl">
-              <div className="text-xs font-semibold tracking-wider mb-1">BESTSELLER</div>
-              <div className="font-black text-lg">₦18,000</div>
-              <div className="text-xs text-gray-700">THE KIDS NEXT DOOR TEE</div>
+            {/* Yellow accent */}
+            <div className="absolute -top-4 -right-4 w-16 h-16 bg-gold transform rotate-45"></div>
+            
+            {/* Product info */}
+            <div className="absolute bottom-4 left-4 bg-white p-4 rounded shadow-lg">
+              <div className="text-xs text-gray-500 mb-1">₦18,000</div>
+              <div className="font-bold text-sm text-black">THE KIDS NEXT DOOR</div>
             </div>
           </div>
         </div>
