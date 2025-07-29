@@ -2,7 +2,6 @@ import { NextRequest } from 'next/server'
 import { db } from '@/lib/db'
 import { getAuthUser } from '@/lib/auth'
 import { sendEmail, emailTemplates } from '@/lib/email'
-import { withOrderRateLimit, withApiRateLimit } from '@/lib/rateLimiter'
 import { validateOrderData, sanitizeString } from '@/lib/validation'
 import { logInfo, logError, logWarn } from '@/lib/logger'
 
@@ -183,5 +182,5 @@ async function getOrdersHandler(request: NextRequest) {
   }
 }
 
-export const POST = withOrderRateLimit(createOrderHandler)
-export const GET = withApiRateLimit(getOrdersHandler)
+export const POST = createOrderHandler
+export const GET = getOrdersHandler

@@ -1,8 +1,7 @@
 import type { Metadata } from 'next'
 import { Space_Grotesk } from 'next/font/google'
 import './globals.css'
-import { CartProvider } from '@/contexts/CartContext'
-import CartDrawer from '@/components/CartDrawer'
+import Providers from '@/components/Providers'
 
 const spaceGrotesk = Space_Grotesk({ subsets: ['latin'] })
 
@@ -20,10 +19,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${spaceGrotesk.className} bg-white text-gray-900 antialiased`} suppressHydrationWarning>
-        <CartProvider>
+        <Providers>
           {children}
-          <CartDrawer />
-        </CartProvider>
+        </Providers>
       </body>
     </html>
   )

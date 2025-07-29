@@ -2,7 +2,6 @@ import { NextRequest } from 'next/server'
 import { db } from '@/lib/db'
 import { hashPassword, generateToken } from '@/lib/auth'
 import { sendEmail, emailTemplates } from '@/lib/email'
-import { withAuthRateLimit } from '@/lib/rateLimiter'
 import { validateRegistrationData, sanitizeString, logSuspiciousActivity } from '@/lib/validation'
 import { logInfo, logError } from '@/lib/logger'
 
@@ -111,4 +110,4 @@ async function registerHandler(request: NextRequest) {
   }
 }
 
-export const POST = withAuthRateLimit(registerHandler)
+export const POST = registerHandler

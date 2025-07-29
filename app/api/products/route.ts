@@ -1,6 +1,9 @@
 import { NextRequest } from 'next/server'
 import { db } from '@/lib/db'
 
+// Make this route dynamic to avoid static generation issues
+export const dynamic = 'force-dynamic'
+
 export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url)
