@@ -1,0 +1,24 @@
+[build]
+  publish = ".next"
+  command = "npm run build"
+
+[build.environment]
+  SKIP_ENV_VALIDATION = "true"
+  NODE_VERSION = "18"
+
+[[plugins]]
+  package = "@netlify/plugin-nextjs"
+
+[functions]
+  node_bundler = "esbuild"
+
+# Redirect all requests to Next.js
+[[redirects]]
+  from = "/*"
+  to = "/404.html"
+  status = 404
+
+[[headers]]
+  for = "/_next/static/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
