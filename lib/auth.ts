@@ -3,7 +3,11 @@ import jwt from 'jsonwebtoken'
 import { NextRequest } from 'next/server'
 import { db } from './db'
 
-const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key'
+const JWT_SECRET = process.env.JWT_SECRET || 'fallback-secret-for-build'
+
+if (!process.env.JWT_SECRET && process.env.NODE_ENV === 'production') {
+  console.warn('JWT_SECRET environment variable is not set in production')
+}
 
 export interface JWTPayload {
   userId: string
