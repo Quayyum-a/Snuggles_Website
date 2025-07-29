@@ -2,6 +2,8 @@
 
 import React from 'react'
 import Link from 'next/link'
+import SimpleProductCard from '@/components/SimpleProductCard'
+import { FEATURED_PRODUCTS } from '@/lib/productData'
 
 const MustHaveSection = () => {
   return (
@@ -29,11 +31,11 @@ const MustHaveSection = () => {
           
           {/* Large Featured Product */}
           <div className="lg:col-span-2">
-            <Link href="/product/kids-next-door-tee">
+            <Link href={`/product/${FEATURED_PRODUCTS[0].id}`}>
               <div className="relative aspect-[4/3] bg-black rounded-lg overflow-hidden cursor-pointer group">
                 <img
-                  src="https://cdn.builder.io/api/v1/image/assets%2Fe4be0ebfbe0245c78c482ccb62c8df0a%2F3ea37fd4c46e403298758b84e2afb0c0?format=webp&width=800"
-                  alt="The Kids Next Door Tee"
+                  src={FEATURED_PRODUCTS[0].image}
+                  alt={FEATURED_PRODUCTS[0].name}
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                 />
               </div>
@@ -42,40 +44,12 @@ const MustHaveSection = () => {
 
           {/* Side Products */}
           <div className="space-y-8">
-            
-            {/* Product 1 */}
-            <Link href="/product/peace-of-mind-tee">
-              <div className="relative cursor-pointer group">
-                <div className="aspect-square bg-white overflow-hidden">
-                  <img
-                    src="https://cdn.builder.io/api/v1/image/assets%2Fe4be0ebfbe0245c78c482ccb62c8df0a%2Fbe8221afd58149f88576702979408a9b?format=webp&width=800"
-                    alt="Peace of Mind Tee"
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                  />
-                </div>
-                <div className="mt-2">
-                  <div className="text-xs text-gray-500 group-hover:text-black transition-colors">Peace of Mind Tee</div>
-                  <div className="font-bold text-sm">₦17,000</div>
-                </div>
-              </div>
-            </Link>
-
-            {/* Product 2 */}
-            <Link href="/product/pandit-psychedelic-tee">
-              <div className="relative cursor-pointer group">
-                <div className="aspect-square bg-white overflow-hidden">
-                  <img
-                    src="https://cdn.builder.io/api/v1/image/assets%2Fe4be0ebfbe0245c78c482ccb62c8df0a%2F16062a88c37b4e3cbc71eac11783d4b2?format=webp&width=800"
-                    alt="PANDIT Psychedelic Tee"
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                  />
-                </div>
-                <div className="mt-2">
-                  <div className="text-xs text-gray-500 group-hover:text-black transition-colors">PANDIT Psychedelic Tee</div>
-                  <div className="font-bold text-sm">₦19,500</div>
-                </div>
-              </div>
-            </Link>
+            {FEATURED_PRODUCTS.slice(1, 3).map((product) => (
+              <SimpleProductCard
+                key={product.id}
+                product={product}
+              />
+            ))}
           </div>
         </div>
 
@@ -86,53 +60,13 @@ const MustHaveSection = () => {
             <p className="text-sm text-gray-600">SNUGGLES COLLECTION</p>
           </div>
           
-          <Link href="/product/snuggles-rainbow-hoodie">
-            <div className="relative cursor-pointer group">
-              <div className="aspect-square bg-white overflow-hidden">
-                <img
-                  src="https://cdn.builder.io/api/v1/image/assets%2Fe4be0ebfbe0245c78c482ccb62c8df0a%2Fa64f82ed3645429787f2c4364e39ddf7?format=webp&width=800"
-                  alt="SNUGGLES Hoodie"
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                />
-              </div>
-              <div className="mt-2 text-center">
-                <div className="text-xs text-gray-500 group-hover:text-black transition-colors">SNUGGLES Hoodie</div>
-                <div className="font-bold text-sm">₦32,000</div>
-              </div>
-            </div>
-          </Link>
-
-          <Link href="/product/peace-of-mind-tee">
-            <div className="relative cursor-pointer group">
-              <div className="aspect-square bg-white overflow-hidden">
-                <img
-                  src="https://cdn.builder.io/api/v1/image/assets%2Fe4be0ebfbe0245c78c482ccb62c8df0a%2Fbe8221afd58149f88576702979408a9b?format=webp&width=800"
-                  alt="Peace of Mind Tee"
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                />
-              </div>
-              <div className="mt-2 text-center">
-                <div className="text-xs text-gray-500 group-hover:text-black transition-colors">Peace of Mind Tee</div>
-                <div className="font-bold text-sm">₦17,000</div>
-              </div>
-            </div>
-          </Link>
-
-          <Link href="/product/pandit-psychedelic-tee">
-            <div className="relative cursor-pointer group">
-              <div className="aspect-square bg-white overflow-hidden">
-                <img
-                  src="https://cdn.builder.io/api/v1/image/assets%2Fe4be0ebfbe0245c78c482ccb62c8df0a%2F16062a88c37b4e3cbc71eac11783d4b2?format=webp&width=800"
-                  alt="PANDIT Psychedelic Tee"
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                />
-              </div>
-              <div className="mt-2 text-center">
-                <div className="text-xs text-gray-500 group-hover:text-black transition-colors">PANDIT Psychedelic Tee</div>
-                <div className="font-bold text-sm">₦19,500</div>
-              </div>
-            </div>
-          </Link>
+          {FEATURED_PRODUCTS.slice(1).map((product) => (
+            <SimpleProductCard
+              key={product.id}
+              product={product}
+              layout="centered"
+            />
+          ))}
         </div>
       </div>
     </section>

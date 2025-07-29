@@ -4,7 +4,6 @@ import StatsSection from '@/components/StatsSection'
 import CollectionShowcase from '@/components/CollectionShowcase'
 import TrendingSection from '@/components/TrendingSection'
 import MustHaveSection from '@/components/MustHaveSection'
-import JoinFamilySection from '@/components/JoinFamilySection'
 import NewsletterSection from '@/components/NewsletterSection'
 import Footer from '@/components/Footer'
 
@@ -17,7 +16,6 @@ export default function Home() {
       <CollectionShowcase />
       <TrendingSection />
       <MustHaveSection />
-      <JoinFamilySection />
       <NewsletterSection />
       <Footer />
     </main>
